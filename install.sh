@@ -40,9 +40,16 @@ echo "ALTER USER $DB_USER CREATEDB;" | sudo -u postgres psql;
 sudo apt-get install -y python3-pip python3-dev;
 sudo pip3 install virtualenv virtualenvwrapper;
 
-############################
-# Virtualenv Configuration #
-############################
+#######################
+# Pillow Requirements #
+#######################
+
+sudo apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev \
+    libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev;
+
+##################################
+# Virtualenv Setup Configuration #
+##################################
 
 echo 'export WORKON_HOME=$HOME/.virtualenvs' >> /home/vagrant/.profile;
 echo 'export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4' >> /home/vagrant/.profile;
