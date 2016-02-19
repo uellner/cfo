@@ -44,7 +44,7 @@ sudo pip3 install virtualenv virtualenvwrapper;
 # Pillow Requirements #
 #######################
 
-sudo apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev \
+sudo apt-get install -y libtiff4-dev libjpeg8-dev zlib1g-dev \
     libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev;
 
 ##################################
@@ -63,4 +63,4 @@ mkvirtualenv --python=/usr/bin/python3.4 $PROJECT_NAME -r requirements.txt -a .;
 # Database Settings #
 ###################
 
-#./manage.py migrate;
+./manage.py migrate;

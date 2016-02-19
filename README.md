@@ -7,14 +7,7 @@ Dependências
 ------------
 
 * VirtualBox 5+
-
- * PS: NÃO INSTALAR O VIRTUALBOX PELO REPOSITÓRIO DO UBUNTU, POIS ELE ESTÁ BUGADO,
-   DAR PREFERÊNCIA PARA O REPOSITÓRIO OFICIAL DELES
-
 * Vagrant 1.7.4+
-
-# TODO: Informações de instalação dos dois.
-
 
 Instalação
 ----------

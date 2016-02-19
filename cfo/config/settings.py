@@ -51,7 +51,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'cfo.urls'
+ROOT_URLCONF = 'cfo.config.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cfo.wsgi.application'
+WSGI_APPLICATION = 'cfo.config.wsgi.application'
 
 
 # Database
