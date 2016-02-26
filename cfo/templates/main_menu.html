@@ -1,0 +1,58 @@
+{% load staticfiles %}
+{% load menu %}
+{% generate_menu %}
+<aside class="aside">
+    <div class="aside-inner">
+        <nav data-sidebar-anyclick-close="" class="sidebar">
+            <ul class="nav">
+                <li class="has-user-block">
+                    <div id="user-block" class="collapse">
+                        <div class="item user-block">
+                            <!-- User picture-->
+                            <div class="user-block-picture">
+                                <div class="user-block-status">
+                                    <img src="{% static "img/user_image.png" %}" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
+                                    <div class="circle circle-success circle-lg"></div>
+                                </div>
+                            </div>
+                            <!-- Name and Job-->
+                            <div class="user-block-info">
+                                <span class="user-block-name">{{ request.user.username }}</span>
+                                <a href="/logout/">
+                                    <span class="user-block-role">Sair</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- START sidebar nav-->
+                <li class="nav-heading ">
+                    <span data-localize="sidebar.heading.HEADER">Opções Disponíveis</span>
+                </li>
+                <!-- Iterates over all sidebar items-->
+                    {% for item in menus.course %}
+                        <li class=" ">
+                            <a href="#{{ item.title }}" title="{{ item.title }}" data-toggle="collapse">
+                                <!-- <div class="pull-right label label-info">3</div> -->
+                                <em class="icon-folder"></em>
+                                <span data-localize="sidebar.nav.{{ item.title }}">{{ item.title }}</span>
+                            </a>
+                            {% if has_submenu %}
+                                <ul id="{{ item.title }}" class="nav sidebar-subnav collapse">
+                                    {% for subitem in item.children %}
+                                        {% if forloop.first %}
+                                            <li class="sidebar-subnav-header">{{ item.title }}</li>
+                                        {% endif %}
+                                        <li class=" ">
+                                            <a href="{{ subitem.url }}"><span>{{ subitem.title }}</span></a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                <!-- END sidebar nav-->
+            </ul>
+        </nav>
+    </div>
+</aside>
