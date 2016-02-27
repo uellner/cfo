@@ -14,9 +14,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from ..course import views
+from ..course import views as course_views
+from ..user import views as user_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.index, name='index'),
+    url(r'^login/',user_views.login_view, name='login_view'),
+    url(r'^logout/',user_views.logout_view, name='logout_view'),
+    url(r'^recover/',user_views.recover_view, name='recover_view'),
+    url(r'^', course_views.index, name='index'),
 ]

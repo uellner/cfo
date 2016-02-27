@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load staticfiles %}
+   <div class="wrapper">
+      <div class="block-center mt-xl wd-xl">
+         <!-- START panel-->
+         <div class="panel panel-green panel-flat">
+            <div class="panel-heading text-center">
+               <a href="#">
+                  <img src="{% static "img/logo_cfo.png" %}" alt="Image" class="block-center img-rounded panel-login-img">
+               </a>
+            </div>
+            {% if form.errors %}
+                <div class="alert alert-danger text-center">
+                    Corrija o{{ form.errors|pluralize }} erro{{ form.errors|pluralize }} abaixo.
+                </div>
+            {% endif %}
+            {% if wrong_data %}
+                <div class="alert alert-danger text-center">
+                    Usuário ou senha inválidos.
+                </div>
+            {% endif %}
+            <div class="panel-body">
+               <!-- <form role="form" data-parsley-validate="" novalidate="" class="mb-lg"> -->
+               <form role="form" action="/login/" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group has-feedback">
+                     <input id="username" type="text" name="username" placeholder="Usuário" autocomplete="off" required class="form-control">
+                     <span class="fa fa-user form-control-feedback text-muted"></span>
+                  </div>
+                  <div class="form-group has-feedback">
+                     <input id="password" type="password" name="password" placeholder="Senha" required class="form-control">
+                     <span class="fa fa-lock form-control-feedback text-muted"></span>
+                  </div>
+                  <div class="clearfix">
+                     <div class="checkbox c-checkbox pull-left mt0">
+                        <label>
+                           <input type="checkbox" value="" name="remember">
+                           <span class="fa "></span>Lembrar?</label>
+                     </div>
+                     <div class="pull-right"><a href="/recover/" class="text-muted">Esqueceu sua senha?</a>
+                     </div>
+                  </div>
+                  <button type="submit" class="btn btn-block btn-primary mt-lg">Entrar</button>
+               </form>
+               <p class="pt-lg text-center">Não é assinante?</p><a href="register.html" class="btn btn-block btn-default">Assine agora</a>
+            </div>
+         </div>
+         <!-- END panel-->
+         <div class="p-lg text-center">
+            <span>&copy;</span>
+            <span>2016</span>
+            <span>-</span>
+            <span>EPMF</span>
+            <br>
+            <span>Clube de Finanças Online</span>
+         </div>
+      </div>
+   </div>
+{% endblock body %}

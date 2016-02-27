@@ -88,6 +88,10 @@ DATABASES = {
 }
 
 
+# DJANGO AUTHENTICATION SYSTEM
+# IF THE USER ISN’T LOGGED IN, REDIRECT TO SETTINGS.LOGIN_URL
+LOGIN_URL = '/login/'
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
