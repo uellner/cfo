@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'cfo.course',
     'menu',
+    'embed_video',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -2,6 +2,7 @@
 
 {% block body %}
     {% load staticfiles %}
+    {% load embed_video_tags %}
    <div class="wrapper">
        <!-- top navbar-->
        {% include "header.html" %}
@@ -46,11 +47,14 @@
                <!-- Page content-->
                <div class="content-wrapper">
                    {% block title %}
-                   <div class="content-heading">
-                       Teste
-                   </div>
+                       <div class="content-heading">
+                           Teste
+                       </div>
                    {% endblock title %}
                    {% block content %}
+                       <div class="responsive-video">
+                           {% video 'vimeo.com/156664587' 'medium' %}
+                       </div>
                    {% endblock content %}
                </div>
            </section>
