@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'annoying',
     'cfo.course',
     'menu',
     'embed_video',
@@ -114,3 +115,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'cfo/static/dist/'
 ]
+
+# Media files (Images)
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'

@@ -46,14 +46,12 @@
            <section>
                <!-- Page content-->
                <div class="content-wrapper">
-                   {% block title %}
-                       <div class="content-heading">
-                           Teste
-                       </div>
-                   {% endblock title %}
                    {% block content %}
+                       <div class="content-heading">
+                           {{ lesson_title }}
+                       </div>
                        <div class="responsive-video">
-                           {% video 'vimeo.com/156664587' 'medium' %}
+                           {% video lesson_video 'medium' %}
                        </div>
                    {% endblock content %}
                </div>
