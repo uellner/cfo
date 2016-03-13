@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^login/',user_views.login_view, name='login_view'),
     url(r'^logout/',user_views.logout_view, name='logout_view'),
     url(r'^recover/',user_views.recover_view, name='recover_view'),
+    url(r'^activity/(?P<id>[0-9]+)/$', course_views.activity, name='activity'),
     url(r'^', course_views.index, name='index'),
 ]

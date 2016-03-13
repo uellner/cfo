@@ -30,22 +30,40 @@
                     <span data-localize="sidebar.heading.HEADER">Opções Disponíveis</span>
                 </li>
                 <!-- Iterates over all sidebar items-->
-                    {% for item in menus.course %}
+                    {% for item in menus.unit %}
                         <li class=" ">
-                            <a href="#{{ item.title }}" title="{{ item.title }}" data-toggle="collapse">
-                                <!-- <div class="pull-right label label-info">3</div> -->
+                            <a href="#{{ item.title|cut:" " }}" title="{{ item.title }}" data-toggle="collapse">
+                                <!-- <div class="pull-right label label-info">{{ item.children|length}}</div> -->
                                 <em class="icon-folder"></em>
                                 <span data-localize="sidebar.nav.{{ item.title }}">{{ item.title }}</span>
                             </a>
                             {% if has_submenu %}
-                                <ul id="{{ item.title }}" class="nav sidebar-subnav collapse">
+                                <ul id="{{ item.title|cut:" " }}" class="nav sidebar-subnav collapse">
                                     {% for subitem in item.children %}
-                                        {% if forloop.first %}
-                                            <li class="sidebar-subnav-header">{{ item.title }}</li>
+                                        {% if subitem.children %}
+                                            <li class=" ">
+                                                <a href="#{{ subitem.title|cut:" " }}" title="{{ subitem.title }}" data-toggle="collapse">
+                                                    <span data-localize="sidebar.nav.{{ subitem.title }}">{{ subitem.title }}</span>
+                                                </a>
+                                                <ul id="{{ subitem.title|cut:" " }}" class="nav sidebar-subnav collapse">
+                                                    {% for inneritem in subitem.children %}
+                                                        {% if forloop.first %}
+                                                            <li class="sidebar-subnav-header">{{ subitem.title }}</li>
+                                                        {% endif %}
+                                                        <li class=" ">
+                                                            <a href="{{ inneritem.url }}"><span>{{ inneritem.title }}</span></a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% else %}
+                                            {% if forloop.first %}
+                                                <li class="sidebar-subnav-header">{{ item.title }}</li>
+                                            {% endif %}
+                                            <li class=" ">
+                                                <a href="{{ subitem.url }}"><span>{{ subitem.title }}</span></a>
+                                            </li>
                                         {% endif %}
-                                        <li class=" ">
-                                            <a href="{{ subitem.url }}"><span>{{ subitem.title }}</span></a>
-                                        </li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}

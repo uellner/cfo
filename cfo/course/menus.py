@@ -1,26 +1,45 @@
 from menu import Menu, MenuItem
+from .models import Course, Unit, Lesson, Activity
 from django.core.urlresolvers import reverse
 
-Menu.add_item(
-    "course",
-    MenuItem(
-        title="Cursos",
-        url=reverse("index"),
-        weight=10,
-        icon="tools",
-        children=(
+course = Course.objects.get(id=1)
+units = Unit.objects.filter(course=course)
+
+for unit in units:
+    lessons = Lesson.objects.filter(unit=unit)
+    lesson_items = []
+    for lesson in lessons:
+        activities = Activity.objects.filter(lesson=lesson)
+        activities_items = []
+        for activity in activities:
+            activities_items.append(
+                MenuItem(
+                    title=activity.title,
+                    url=reverse("activity", args=[activity.id]),
+                    weight=10,
+                    icon="user"
+                ),
+            )
+        lesson_items.append(
             MenuItem(
-                "Adicionar Novo",
-                reverse("index"),
+                title=lesson.title,
+                url=reverse("index"),
                 weight=10,
-                icon="user"
-            ),
-            MenuItem(
-                "Todos",
-                reverse("index"),
-                weight=10,
-                icon="user"
+                icon="user",
+                children=(
+                    activities_items
+                )
             ),
         )
+    Menu.add_item(
+        "unit",
+        MenuItem(
+            title=unit.title,
+            url=reverse("index"),
+            weight=10,
+            icon="tools",
+            children=(
+                lesson_items
+            )
+        )
     )
-)

@@ -23,7 +23,6 @@ class Unit(models.Model):
     """
     title = models.CharField(verbose_name="Título", max_length=255)
     summary = models.TextField(verbose_name="Resumo", max_length=500)
-    content = models.TextField(verbose_name="Conteudo")
     course = models.ForeignKey(Course)
     logo = models.ImageField(upload_to='course/units/%Y/%m/%d', null=True)
 
@@ -36,10 +35,23 @@ class Lesson(models.Model):
         Classe que representa as informações de uma lição de unidade.
     """
     title = models.CharField(verbose_name="Título", max_length=155)
-    lesson_type = models.CharField(verbose_name="Tipo", max_length=155)
-    content = models.TextField(verbose_name="Conteudo")
+    summary = models.TextField(verbose_name="Resumo", max_length=500)
     unit = models.ForeignKey(Unit)
     logo = models.ImageField(upload_to='course/lessons/%Y/%m/%d', null=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Activity(models.Model):
+    u"""
+        Classe que representa as informações de atividade de uma lição.
+    """
+    title = models.CharField(verbose_name="Título", max_length=155)
+    activity_type = models.CharField(verbose_name="Tipo", max_length=155)
+    content = models.TextField(verbose_name="Conteudo")
+    lesson = models.ForeignKey(Lesson)
+    logo = models.ImageField(upload_to='course/activities/%Y/%m/%d', null=True)
     video = EmbedVideoField(default='http://www.vimeo.com/')
 
     def __str__(self):
