@@ -27,14 +27,17 @@
                 </li>
                 <!-- START sidebar nav-->
                 <li class="nav-heading ">
-                    <span data-localize="sidebar.heading.HEADER">Opções Disponíveis</span>
+                    <span data-localize="sidebar.heading.HEADER">Curso: CPA-10</span>
+                </li>
+                <li class="nav-heading ">
+                    <span data-localize="sidebar.heading.HEADER">Unidades</span>
                 </li>
                 <!-- Iterates over all sidebar items-->
                     {% for item in menus.unit %}
                         <li class=" ">
                             <a href="#{{ item.title|cut:" " }}" title="{{ item.title }}" data-toggle="collapse">
-                                <!-- <div class="pull-right label label-info">{{ item.children|length}}</div> -->
-                                <em class="icon-folder"></em>
+                                <div class="pull-right label label-info">{{ item.children|length}}%</div>
+                                <em class="icon-trophy"></em>
                                 <span data-localize="sidebar.nav.{{ item.title }}">{{ item.title }}</span>
                             </a>
                             {% if has_submenu %}

@@ -4,6 +4,20 @@
 {% block content %}
    <div class="content-heading">
        {{ activity_title }}
+       <div style="float:right">
+           <button type="button" class="btn btn-labeled btn-default">
+               Voltar
+               <span class="btn-label btn-label-left">
+                   <!-- <i class="fa fa-arrow-left"></i> -->
+               </span>
+           </button>
+           <button type="button" class="btn btn-labeled btn-info">
+               Próxima Atividade
+               <span class="btn-label btn-label-right">
+                   <!-- <i class="fa fa-arrow-right"></i> -->
+               </span>
+           </button>
+       </div>
    </div>
    <div class="responsive-video">
        {% video activity_video 'medium' %}
