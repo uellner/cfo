@@ -5,18 +5,20 @@
    <div class="content-heading">
        {{ activity_title }}
        <div style="float:right">
-           <button type="button" class="btn btn-labeled btn-default">
-               Voltar
-               <span class="btn-label btn-label-left">
-                   <!-- <i class="fa fa-arrow-left"></i> -->
-               </span>
-           </button>
-           <button type="button" class="btn btn-labeled btn-info">
-               Próxima Atividade
-               <span class="btn-label btn-label-right">
-                   <!-- <i class="fa fa-arrow-right"></i> -->
-               </span>
-           </button>
+           <form method="get" action="/next_or_prev/">
+               <button type="submit" class="btn btn-labeled btn-default" name="prev" value="{{ prev_id }}">
+                   Voltar
+                   <span class="btn-label btn-label-left">
+                       <!-- <i class="fa fa-arrow-left"></i> -->
+                   </span>
+               </button>
+               <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ next_id }}">
+                   Próxima Atividade
+                   <span class="btn-label btn-label-right">
+                       <!-- <i class="fa fa-arrow-right"></i> -->
+                   </span>
+               </button>
+           </form>
        </div>
    </div>
    <div class="responsive-video">

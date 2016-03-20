@@ -23,6 +23,7 @@ class Unit(models.Model):
     """
     title = models.CharField(verbose_name="Título", max_length=255)
     summary = models.TextField(verbose_name="Resumo", max_length=500)
+    rank = models.IntegerField(verbose_name="Ranking", null=True)
     course = models.ForeignKey(Course)
     logo = models.ImageField(upload_to='course/units/%Y/%m/%d', null=True)
 
@@ -36,6 +37,7 @@ class Lesson(models.Model):
     """
     title = models.CharField(verbose_name="Título", max_length=155)
     summary = models.TextField(verbose_name="Resumo", max_length=500)
+    rank = models.IntegerField(verbose_name="Ranking", null=True)
     unit = models.ForeignKey(Unit)
     logo = models.ImageField(upload_to='course/lessons/%Y/%m/%d', null=True)
 
@@ -50,9 +52,13 @@ class Activity(models.Model):
     title = models.CharField(verbose_name="Título", max_length=155)
     activity_type = models.CharField(verbose_name="Tipo", max_length=155)
     content = models.TextField(verbose_name="Conteudo")
+    rank = models.IntegerField(verbose_name="Ranking", null=True)
     lesson = models.ForeignKey(Lesson)
     logo = models.ImageField(upload_to='course/activities/%Y/%m/%d', null=True)
     video = EmbedVideoField(default='http://www.vimeo.com/')
 
     def __str__(self):
         return self.title
+
+    def get_rank_choices():
+        return [(x, x) for x in Activity.objects.count()]
