@@ -1,7 +1,7 @@
 CFO
 =============
 
-Plataforma de e-learning para os cursos oferecidos pela EPMF.
+Plataforma de e-learning para cursos.
 
 Dependências
 ------------
