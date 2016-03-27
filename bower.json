@@ -30,6 +30,8 @@
     "animo.js": "ThrivingKings/animo.js#1.0.2",
     "whirl": "1.0.0",
     "jquery-localize-i18n": "*",
-    "simple-line-icons": "2.2.3"
+    "simple-line-icons": "2.2.3",
+    "jquery-classyloader": "http://vox.space/files/jquery-classyloader.zip",
+    "sparkline": "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.js"
   }
 }

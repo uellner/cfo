@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
-from .models import Activity
+from .models import Activity, Unit
 
 
 @render_to('index.html')
@@ -44,3 +44,25 @@ def next_or_prev(request):
         activity_id = request.GET['prev']
 
     return redirect('activity', id=activity_id)
+
+
+@render_to('unit.html')
+@login_required
+def unit(request, id):
+    unit = get_object_or_404(Unit, id=id)
+    # next_activity = (
+    #     Activity.objects.filter(rank__gt=activity.rank)
+    #     .filter(lesson=activity.lesson)
+    #     .order_by('rank').first()
+    # )
+    # prev_activity = (
+    #     Activity.objects.filter(rank__lt=activity.rank)
+    #     .filter(lesson=activity.lesson)
+    #     .order_by('rank').first()
+    # )
+    return {
+        'user_logout': reverse('logout_view'),
+        'unit_title': unit.title,
+        # 'next_id': next_activity and next_activity.id or activity.id,
+        # 'prev_id': prev_activity and prev_activity.id or activity.id
+    }
