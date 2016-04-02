@@ -3,11 +3,10 @@
     {% load staticfiles %}
     <div class="row">
         <div class="col-md-12">
-          <!-- START loader widget-->
             <div class="jumbotron">
-                <h2>Sistema Financeiro Nacional</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing.
+                <h2>{{ unit.title }}</h2>
+                <p>
+                    {{ unit.summary }}
                 </p>
                 <!-- <p>
                     <a role="button" class="btn btn-primary btn-lg">Continuar</a>
@@ -24,94 +23,50 @@
                 <div class="panel-wrapper collapse in">
                     <div class="panel-body">
                         <div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">
-                            <div class="panel panel-default">
-                                <div id="headingOne" role="tab" class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Collapsible Group Item #1</a>
-                                    </h4>
-                                </div>
-                                <div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-hover">
-                                               <thead>
-                                                  <tr>
-                                                     <th>Atividade</th>
-                                                     <th>Situação</th>
-                                                     <th></th>
-                                                  </tr>
-                                               </thead>
-                                               <tbody>
-                                                  <tr>
-                                                     <td>Bootstrap 5.x Nullam sit amet...</td>
-                                                     <td>
-                                                        <div class="label label-success">Completa</div>
-                                                     </td>
-                                                     <td>
-                                                         <a href="/activity/5/" class="btn btn-labeled btn-info btn-xs" name="next" value="">
-                                                             <span class="btn-label btn-label-right">
-                                                                 <i class="fa fa-arrow-right"></i>
-                                                             </span>
-                                                         </a>
-                                                     </td>
-                                                  </tr>
-                                                  <tr>
-                                                     <td>Web Engine</td>
-                                                     <td>
-                                                        <div class="label label-info">Em Andamento</div>
-                                                     </td>
-                                                     <td>
-                                                         <button class="btn btn-labeled btn-info btn-xs" name="next" value="">
-                                                             <span class="btn-label btn-label-right">
-                                                                 <i class="fa fa-arrow-right"></i>
-                                                             </span>
-                                                         </button>
-                                                     </td>
-                                                  </tr>
-                                                  <tr>
-                                                     <td>Nullam sit amet</td>
-                                                     <td>
-                                                        <div class="label label-warning">Não Iniciada</div>
-                                                     </td>
-                                                     <td>
-                                                         <button class="btn btn-labeled btn-info btn-xs" name="next" value="">
-                                                             <span class="btn-label btn-label-right">
-                                                                 <i class="fa fa-arrow-right"></i>
-                                                             </span>
-                                                         </button>
-                                                     </td>
-                                                  </tr>
-                                               </tbody>
-                                            </table>
-                                         </div>
-                                         <!-- END table-responsive-->
+                            {% for lesson in unit.lessons %}
+                                <div class="panel panel-default">
+                                    <div id="{{ lesson.title }}" role="tab" class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#{{ lesson.id }}" {% if forloop.first %} aria-expanded="true" {% else %} aria-expanded="false" {% endif %} aria-controls="{{ lesson.id }}">{{ lesson.title }}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="{{ lesson.id }}" role="tabpanel" aria-labelledby="{{ lesson.title }}" class="panel-collapse {% if forloop.first %} collapse in {% else %} collapse {% endif %}">
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                   <thead>
+                                                      <tr>
+                                                         <th>Atividade</th>
+                                                         <th>Situação</th>
+                                                         <th></th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      {% for activity in unit.activities %}
+                                                          {% if activity.lesson == lesson %}
+                                                              <tr>
+                                                                 <td>{{ activity.title }}</td>
+                                                                 <td>
+                                                                    <div class="label label-success">Completa</div>
+                                                                 </td>
+                                                                 <td>
+                                                                     <a href="/activity/{{ activity.id }}/" class="btn btn-labeled btn-info btn-xs" name="next" value="">
+                                                                         <span class="btn-label btn-label-right">
+                                                                             <i class="fa fa-arrow-right"></i>
+                                                                         </span>
+                                                                     </a>
+                                                                 </td>
+                                                              </tr>
+                                                          {% endif %}
+                                                      {% endfor %}
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                             <!-- END table-responsive-->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div id="headingTwo" role="tab" class="panel-heading">
-                                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="collapsed">          Collapsible Group Item #2        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-                                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
-                                        butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div id="headingThree" role="tab" class="panel-heading">
-                                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="collapsed">          Collapsible Group Item #3        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" role="tabpanel" aria-labelledby="headingThree" class="panel-collapse collapse">
-                                    <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-                                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
-                                        butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="panel-footer">Tempo total de 120 horas</div>
