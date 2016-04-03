@@ -50,8 +50,8 @@ def next_or_prev(request):
 @login_required
 def unit(request, id):
     unit = get_object_or_404(Unit, id=id)
-    lessons = Lesson.objects.filter(unit=unit)
-    activities = Activity.objects.filter(lesson__unit=unit)
+    lessons = Lesson.objects.filter(unit=unit).order_by('rank')
+    activities = Activity.objects.filter(lesson__unit=unit).order_by('lesson__rank', 'rank')
     return {
         'user_logout': reverse('logout_view'),
         'unit': {

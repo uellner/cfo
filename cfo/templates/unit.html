@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron">
-                <h2>{{ unit.title }}</h2>
+                <h2><em class="icon-trophy"></em> : {{ unit.title }}</h2>
                 <p>
                     {{ unit.summary }}
                 </p>
@@ -27,7 +27,9 @@
                                 <div class="panel panel-default">
                                     <div id="{{ lesson.title }}" role="tab" class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#{{ lesson.id }}" {% if forloop.first %} aria-expanded="true" {% else %} aria-expanded="false" {% endif %} aria-controls="{{ lesson.id }}">{{ lesson.title }}</a>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#{{ lesson.id }}" {% if forloop.first %} aria-expanded="true" {% else %} aria-expanded="false" {% endif %} aria-controls="{{ lesson.id }}">
+                                                {{ lesson.rank }}. {{ lesson.title }}
+                                            </a>
                                         </h4>
                                     </div>
                                     <div id="{{ lesson.id }}" role="tabpanel" aria-labelledby="{{ lesson.title }}" class="panel-collapse {% if forloop.first %} collapse in {% else %} collapse {% endif %}">
@@ -36,8 +38,8 @@
                                                 <table class="table table-striped table-bordered table-hover">
                                                    <thead>
                                                       <tr>
-                                                         <th>Atividade</th>
-                                                         <th>Situação</th>
+                                                         <th>Atividades</th>
+                                                         <th></th>
                                                          <th></th>
                                                       </tr>
                                                    </thead>
