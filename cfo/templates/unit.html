@@ -3,22 +3,28 @@
     {% load staticfiles %}
     <div class="row">
         <div class="col-md-12">
-            <div class="jumbotron">
-                <h2><em class="icon-trophy"></em> : {{ unit.title }}</h2>
-                <p>
+            <h2>Unidade {{ unit.rank}}: {{ unit.title }}</h2>
+            <!-- <div class="jumbotron"> -->
+                <!-- <h2>Unidade {{ unit.rank}}: {{ unit.title }}</h2> -->
+                <!-- <p>
                     {{ unit.summary }}
-                </p>
+                </p> -->
                 <!-- <p>
                     <a role="button" class="btn btn-primary btn-lg">Continuar</a>
                 </p> -->
-            </div>
+            <!-- </div> -->
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-lg-9">
+            <p>{{ unit.summary }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
             <div id="panelDemo13" class="panel panel-default">
                 <div class="panel-heading">
-                    Conteúdo da Unidade
+                    Conteúdo
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-body">
@@ -76,7 +82,7 @@
             </div>
             <!-- END panel-->
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-3">
             <!-- <div class="col-md-4"> -->
               <!-- START loader widget-->
                   <div class="panel panel-default">

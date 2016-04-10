@@ -1,0 +1,163 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <div class="row">
+        <div class="col-md-12">
+            <div style="background-image: url({% static "img/background_course2.jpg" %})" class="bg-cover">
+                <div class="p-lg text-center text-white">
+                    <p>
+                        <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb128">
+                    </p>
+                    <h3 class="m-sm">{{ course.title }}</h3>
+                    <p>{{ course.summary }}</p>
+                    <p>
+                        <a role="button" href="/activity/{{ course.next_activity.id }}/" class="btn btn-success btn-lg">Iniciar Agora!</a>
+                    </p>
+                </div>
+            </div>
+            <div class="text-center bg-gray-dark p-lg mb-xl">
+                <div class="row row-table">
+                    <div class="col-xs-4 br">
+                        <h3 class="m0">102</h3>
+                        <p class="m0">
+                            <span class="hidden-xs">Atividades</span>
+                            <!-- <span>Atividades</span> -->
+                        </p>
+                    </div>
+                    <div class="col-xs-4 br">
+                        <h3 class="m0">300</h3>
+                        <p class="m0">Exercícios</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3 class="m0">+ 50</h3>
+                        <p class="m0">Horas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <!-- START timeline-->
+            <ul class="timeline">
+               <li data-datetime="Conteúdo" class="timeline-separator"></li>
+               <!-- START timeline item-->
+               <li>
+                  <div class="timeline-badge primary">
+                     <em class="fa fa-comment"></em>
+                  </div>
+                  <div class="timeline-panel">
+                     <div class="popover left">
+                        <div class="arrow"></div>
+                        <div class="popover-content">
+                           <div class="table-grid table-grid-align-middle mb">
+                              <div class="col">
+                                  <p class="m0">
+                                      <a href="#" class="text-muted">
+                                          <strong>Bem vindo ao curso {{ course.title }}</strong>
+                                      </a>
+                                  </p>
+                              </div>
+                           </div>
+                           <p>
+                              <em>O conteúdo está dividido em XX lições e XX atividades regulares, além de XX atividades bônus.. Bom estudo!</em>
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <!-- END timeline item-->
+               <!-- START timeline item-->
+               {% for unit in course.units %}
+                   <li class="{% if not forloop.counter|divisibleby:2 %}timeline-inverted{% endif %}">
+                      <div class="timeline-badge green">
+                         <em class="fa fa-file-o"></em>
+                      </div>
+                      <div class="timeline-panel">
+                         <div class="popover {% if not forloop.counter|divisibleby:2 %}right{% else %}left{% endif %}">
+                            <div class="arrow"></div>
+                            <div class="popover-content">
+                               <div class="table-grid table-grid-align-middle mb">
+                                  <div class="col">
+                                      <p class="m0">
+                                          <a href="/unit/{{ unit.id }}/" class="text-muted">
+                                              <strong>{{ unit.title }}</strong>
+                                          </a>
+                                      </p>
+                                  </div>
+                               </div>
+                               <p>
+                                   {{ unit.summary }}
+                               </p>
+                            </div>
+                         </div>
+                      </div>
+                   </li>
+               {% endfor %}
+               <li class="timeline-end">
+                  <a href="#" class="timeline-badge purple">
+                     <em class="fa fa-coffee"></em>
+                  </a>
+               </li>
+               <!-- END timeline item-->
+            </ul>
+            <!-- END timeline-->
+        </div>
+        <div class="col-lg-3">
+            <!-- <div class="col-md-4"> -->
+              <!-- START loader widget-->
+                  <div class="panel panel-default">
+                     <div class="panel-body">
+                        <a href="#" class="text-muted pull-right">
+                           <em class="fa fa-arrow-right"></em>
+                        </a>
+                        <div class="text-info">Seu Progresso</div>
+                        <canvas data-classyloader="" data-percentage="50" data-speed="20" data-font-size="35px" data-diameter="70" data-line-color="#23b7e5" data-remaining-line-color="rgba(200,200,200,0.4)" data-line-width="10"
+                        data-rounded-line="true" class="center-block">
+                        </canvas>
+                     </div>
+                     <div class="panel-footer">
+                        <p class="text-muted">
+                           <em class="fa fa-clock-o"></em>
+                           <span>35 horas restantes</span>
+                           <!-- <span class="text-dark">350 horas</span> -->
+                        </p>
+                     </div>
+                  </div>
+                <!-- </div> -->
+                <!-- <div class="col-md-4"> -->
+                  <!-- START widget-->
+                  <div class="panel widget">
+                     <div class="half-float">
+                        <img src="{% static "img/bg3.jpg" %}" alt="" class="img-responsive">
+                        <div class="half-float-bottom">
+                           <img src="{% static "img/09.jpg" %}" alt="Image" class="img-thumbnail img-circle thumb128">
+                        </div>
+                     </div>
+                     <div class="panel-body text-center">
+                        <h3 class="m0">Ted Berry</h3>
+                        <p class="text-muted">Lead director</p>
+                        <p>Proin metus justo, commodo in ultrices at, lobortis sit amet dui. Fusce dolor purus, adipiscing a tempus at, gravida vel purus.</p>
+                     </div>
+                     <div class="panel-body text-center bg-gray-dark">
+                        <div class="row row-table">
+                           <div class="col-xs-4">
+                              <h3 class="m0">400</h3>
+                              <p class="m0">Photos</p>
+                           </div>
+                           <div class="col-xs-4">
+                              <h3 class="m0">2000</h3>
+                              <p class="m0">Likes</p>
+                           </div>
+                           <div class="col-xs-4">
+                              <h3 class="m0">500</h3>
+                              <p class="m0">Following</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+              <!-- END widget-->
+           <!-- </div> -->
+        </div>
+    </div>
+{% endblock content %}

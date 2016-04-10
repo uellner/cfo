@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
-from .models import Activity, Unit, Lesson
+from .models import Activity, Unit, Lesson, Course
 
 
 @render_to('index.html')
@@ -57,7 +57,25 @@ def unit(request, id):
         'unit': {
             'title': unit.title,
             'summary': unit.summary,
+            'rank': unit.rank,
             'lessons': lessons,
             'activities': activities
+        },
+    }
+
+
+@render_to('course.html')
+@login_required
+def course(request, id):
+    course = get_object_or_404(Course, id=id)
+    units = Unit.objects.filter(course=course).order_by('rank')
+    next_activity = Activity.objects.filter(lesson__unit__course=course).order_by('lesson__rank', 'rank')[0]
+    return {
+        'user_logout': reverse('logout_view'),
+        'course': {
+            'title': course.title,
+            'summary': course.summary,
+            'next_activity': next_activity,
+            'units': units,
         },
     }
