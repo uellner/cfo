@@ -2,26 +2,32 @@
 
 {% load embed_video_tags %}
 {% block content %}
-   <div class="content-heading">
-       {{ activity_title }}
-       <div style="float:right">
-           <form method="get" action="/next_or_prev/">
-               <button type="submit" class="btn btn-labeled btn-default" name="prev" value="{{ prev_id }}">
-                   Voltar
-                   <span class="btn-label btn-label-left">
-                       <!-- <i class="fa fa-arrow-left"></i> -->
-                   </span>
-               </button>
-               <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ next_id }}">
-                   Próxima Atividade
-                   <span class="btn-label btn-label-right">
-                       <!-- <i class="fa fa-arrow-right"></i> -->
-                   </span>
-               </button>
-           </form>
+   <div class="row">
+       <div class="col-lg-9">
+           <div class="panel panel-default panel-video">
+               <div class="responsive-video">
+                   {% video activity_video 'medium' %}
+               </div>
+           </div>
        </div>
-   </div>
-   <div class="responsive-video">
-       {% video activity_video 'medium' %}
+       <div class="col-lg-3">
+           {{ activity_title }}
+           <div style="float:right">
+               <form method="get" action="/next_or_prev/">
+                   <button type="submit" class="btn btn-labeled btn-default" name="prev" value="{{ prev_id }}">
+                       Voltar
+                       <span class="btn-label btn-label-left">
+                           <!-- <i class="fa fa-arrow-left"></i> -->
+                       </span>
+                   </button>
+                   <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ next_id }}">
+                       Próxima Atividade
+                       <span class="btn-label btn-label-right">
+                           <!-- <i class="fa fa-arrow-right"></i> -->
+                       </span>
+                   </button>
+               </form>
+           </div>
+       </div>
    </div>
 {% endblock content %}
