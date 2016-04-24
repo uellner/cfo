@@ -2,6 +2,7 @@
 
 {% load embed_video_tags %}
 {% block content %}
+    {% load staticfiles %}
    <div class="row">
        <div class="col-lg-9">
            <div class="panel panel-default panel-video">
@@ -11,22 +12,51 @@
            </div>
        </div>
        <div class="col-lg-3">
-           {{ activity_title }}
-           <div style="float:right">
+           <div class="bg-cover">
+                <div class="p-sm text-center">
+                    <p>
+                        <a href="/course/{{ unit.course.id }}/">
+                            <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb128">
+                        </a>
+                    </p>
+                    <p class="m-sm">
+                        <b>{{ activity_title }} </b>
+                    </p>
+                 </div>
+           </div>
+           <div class="p-sm text-center">
                <form method="get" action="/next_or_prev/">
-                   <button type="submit" class="btn btn-labeled btn-default" name="prev" value="{{ prev_id }}">
-                       Voltar
-                       <span class="btn-label btn-label-left">
-                           <!-- <i class="fa fa-arrow-left"></i> -->
-                       </span>
-                   </button>
                    <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ next_id }}">
                        Próxima Atividade
-                       <span class="btn-label btn-label-right">
-                           <!-- <i class="fa fa-arrow-right"></i> -->
-                       </span>
+                       <span class="btn-label btn-label-right"></span>
                    </button>
                </form>
+           </div>
+           <div class="p-sm">
+               <p class="m-sm">
+                   <a href="/unit/{{ unit.id }}/">
+                       Unidade {{ unit.rank }}
+                   </a>
+                    > {{ lesson.title }}
+               </p>
+           </div>
+           <div class="p-sm">
+               <div class="box-placeholder">
+                   <div class="btn-group btn-group-activity">
+                      <button data-toggle="dropdown" class="btn btn-default btn-group-activity">
+                          Selecione outra atividade desta lição <b class="caret"></b>
+                      </button>
+                      <ul role="menu" class="dropdown-menu animated fadeIn dropdown-menu-activity">
+                          {% for activity in lesson_activities %}
+                             <li>
+                                 <a href="/activity/{{ activity.id }}/">
+                                     <b>{{ activity.rank }} - </b>{{ activity.title }}
+                                 </a>
+                             </li>
+                          {% endfor %}
+                      </ul>
+                   </div>
+               </div>
            </div>
        </div>
    </div>

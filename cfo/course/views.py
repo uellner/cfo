@@ -22,17 +22,15 @@ def activity(request, id):
         .filter(lesson=activity.lesson)
         .order_by('rank').first()
     )
-    prev_activity = (
-        Activity.objects.filter(rank__lt=activity.rank)
-        .filter(lesson=activity.lesson)
-        .order_by('rank').first()
-    )
+    lesson_activities = Activity.objects.filter(lesson=activity.lesson).exclude(id=activity.id).order_by('rank')
     return {
         'user_logout': reverse('logout_view'),
         'activity_video': activity.video,
         'activity_title': activity.title,
+        'lesson_activities': lesson_activities,
+        'unit': activity.lesson.unit,
+        'lesson': activity.lesson,
         'next_id': next_activity and next_activity.id or activity.id,
-        'prev_id': prev_activity and prev_activity.id or activity.id
     }
 
 
