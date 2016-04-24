@@ -20,6 +20,12 @@
                         </a>
                     </p>
                     <p class="m-sm">
+                        <a href="/unit/{{ unit.id }}/">
+                            Unidade {{ unit.rank }}
+                        </a>
+                         > {{ lesson.title }}
+                    </p>
+                    <p class="m-sm">
                         <b>{{ activity_title }} </b>
                     </p>
                  </div>
@@ -31,14 +37,6 @@
                        <span class="btn-label btn-label-right"></span>
                    </button>
                </form>
-           </div>
-           <div class="p-sm">
-               <p class="m-sm">
-                   <a href="/unit/{{ unit.id }}/">
-                       Unidade {{ unit.rank }}
-                   </a>
-                    > {{ lesson.title }}
-               </p>
            </div>
            <div class="p-sm">
                <div class="box-placeholder">
