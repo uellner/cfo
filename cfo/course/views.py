@@ -26,7 +26,7 @@ def activity(request, id):
     return {
         'user_logout': reverse('logout_view'),
         'activity_video': activity.video,
-        'activity_title': activity.title,
+        'activity': activity,
         'lesson_activities': lesson_activities,
         'unit': activity.lesson.unit,
         'lesson': activity.lesson,
