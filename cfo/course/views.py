@@ -8,7 +8,17 @@ from .models import Activity, Unit, Lesson, Course
 @render_to('index.html')
 @login_required
 def index(request):
+    return redirect('dashboard')
+
+
+@render_to('dashboard.html')
+@login_required
+def dashboard(request):
+    course = get_object_or_404(Course, id=1)
+    next_activity = Activity.objects.filter(lesson__unit__course=course).order_by('lesson__rank', 'rank')[0]
     return {
+        'course': course,
+        'next_activity': next_activity,
         'user_logout': reverse('logout_view'),
     }
 

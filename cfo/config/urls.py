@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^next_or_prev/',course_views.next_or_prev, name='next_or_prev'),
     url(r'^unit/(?P<id>[0-9]+)/$', course_views.unit, name='unit'),
     url(r'^course/(?P<id>[0-9]+)/$', course_views.course, name='course'),
+    url(r'^dashboard/', course_views.dashboard, name='dashboard'),
     url(r'^', course_views.index, name='index'),
 ]
