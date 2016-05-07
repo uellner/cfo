@@ -3,40 +3,114 @@
     {% load staticfiles %}
     <div class="row">
         <div class="col-md-12">
-        <!-- <div class="col-lg-9">
-        <div class="col-lg-3"> -->
-            <div class="panel widget panel-info">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Último curso em andamento</h4>
+                    <hr>
                 </div>
                 <div class="panel-body">
                     <div class="col-lg-3">
                         <div class="p-lg text-center">
                             <p>
-                                <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb128">
+                                <a href="/course/{{ course.id }}/">
+                                    <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb128">
+                                </a>
                             </p>
                             <h3 class="m-sm">{{ course.title }}</h3>
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="text-right text-muted">
-                            <em class="fa fa-certificate fa-2x"></em>
-                        </div>
                         <h4 class="mt0">Último acesso em 01.05.2016</h4>
                         <p class="text-muted">Seu progresso</p>
-                        <div class="progress progress-striped progress-xl">
-                            <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-info progress-60">
-                                <span class="sr-only">60% Complete</span>
+                        <div class="progress progress-xl">
+                            <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-success progress-60">
+                                <span class="sr-only-focusable">60%</span>
                             </div>
                         </div>
                         <p>{{ course.summary }}</p>
-                        <p>
-                            <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-success btn-lg">Continuar Agora!</a>
-                            <!-- <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-warning btn-lg dashboard-button">Faça o simulado!</a> -->
-                        </p>
                     </div>
                 </div>
+                <div class="panel-footer text-center">
+                    <p>
+                        <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-success btn-lg">Continuar Agora!</a>
+                        <!-- <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-warning btn-lg dashboard-button">Faça o simulado!</a> -->
+                    </p>
+                </div>
           </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Outros cursos disponíveis</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-3">
+                <div class="well">
+                    <span class="label label-purple">Certificações</span>
+                    <div class="p-lg text-center">
+                        <a href="/course/{{ course.id }}/">
+                            <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb80">
+                        </a>
+                        <h4>Curso 1</h4>
+                    </div>
+                    <div class="progress progress-xs">
+                        <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-warning progress-0">
+                            <span class="sr-only-focusable">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="well">
+                    <span class="label label-green">Ações</span>
+                    <div class="p-lg text-center">
+                        <a href="/course/{{ course.id }}/">
+                            <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb80">
+                        </a>
+                        <h4>Curso 2</h4>
+                    </div>
+                    <div class="progress progress-xs">
+                        <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-warning progress-80">
+                            <span class="sr-only-focusable">80%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="well">
+                    <span class="label label-yellow">Renda Fixa</span>
+                    <div class="p-lg text-center">
+                        <a href="/course/{{ course.id }}/">
+                            <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb80">
+                        </a>
+                        <h4>Curso 3</h4>
+                    </div>
+                    <div class="progress progress-xs">
+                        <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-warning progress-0">
+                            <span class="sr-only-focusable">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="well">
+                    <span class="label label-gray-dark">Concurso</span>
+                    <div class="p-lg text-center">
+                        <a href="/course/{{ course.id }}/">
+                            <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb80">
+                        </a>
+                        <h4>Curso 4</h4>
+                    </div>
+                    <div class="progress progress-xs">
+                        <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-warning progress-30">
+                            <span class="sr-only-focusable">30%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock content %}

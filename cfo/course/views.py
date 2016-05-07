@@ -14,10 +14,10 @@ def index(request):
 @render_to('dashboard.html')
 @login_required
 def dashboard(request):
-    course = get_object_or_404(Course, id=1)
-    next_activity = Activity.objects.filter(lesson__unit__course=course).order_by('lesson__rank', 'rank')[0]
+    current_course = get_object_or_404(Course, id=1)
+    next_activity = Activity.objects.filter(lesson__unit__course=current_course).order_by('lesson__rank', 'rank')[0]
     return {
-        'course': course,
+        'course': current_course,
         'next_activity': next_activity,
         'user_logout': reverse('logout_view'),
     }
