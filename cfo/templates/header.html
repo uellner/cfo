@@ -4,7 +4,7 @@
     <nav role="navigation" class="navbar topnavbar">
         <!-- START navbar header-->
         <div class="navbar-header">
-            <a href="#/" class="navbar-brand">
+            <a href="/dashboard/" class="navbar-brand">
                 <div class="brand-logo">
                     <img src="{% static "img/logo_cfo.png" %}" alt="Company Logo" class="img-responsive">
                 </div>
@@ -19,10 +19,16 @@
             <!-- START Left navbar-->
             <ul class="nav navbar-nav">
                 <li>
+                    <a href="/dashboard/">Cursos</a>
+                </li>
+                <li>
+                    <a href="#dashboard" data-toggle="dropdown">Simulados</a>
+                </li>
+                <li>
                     <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-                    <a href="#" data-toggle-state="aside-collapsed" class="hidden-xs">
+                    <!-- <a href="#" data-toggle-state="aside-collapsed" class="hidden-xs">
                         <em class="fa fa-navicon"></em>
-                    </a>
+                    </a> -->
                     <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
                     <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
                         <em class="fa fa-navicon"></em>
@@ -31,9 +37,9 @@
                 <!-- START User avatar toggle-->
                 <li>
                     <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-                    <a id="user-block-toggle" href="#user-block" data-toggle="collapse">
+                    <!-- <a id="user-block-toggle" href="#user-block" data-toggle="collapse">
                         <em class="icon-user"></em>
-                    </a>
+                    </a> -->
                 </li>
                 <!-- END User avatar toggle-->
             </ul>
@@ -47,10 +53,68 @@
                     </a>
                 </li>
                 <!-- START Offsidebar button-->
-                <li>
+                <!-- <li>
                     <a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
                         <em class="icon-notebook"></em>
                     </a>
+                </li> -->
+                <li class="dropdown dropdown-list">
+                    <a href="#dashboard" id="login_photo" data-toggle="dropdown">
+                        <img src="{% static "img/09.jpg" %}" alt="Avatar" width="48" height="48" class="img-thumbnail img-circle thumb48 img-user-login">
+                    </a>
+                    <ul class="dropdown-menu animated fadeIn">
+                       <li>
+                           <div class="list-group list-group-user">
+                               <!-- list item-->
+                               <a href="#" class="list-group-item">
+                                   <div class="media-box">
+                                       <div class="pull-left">
+                                           <em class="fa fa-user fa-1x"></em>
+                                       </div>
+                                       <div class="media-box-body clearfix">
+                                           <p class="m0">Meu Perfil</p>
+                                           <p class="m0 text-muted">
+                                               <small>Informações Pessoais</small>
+                                           </p>
+                                       </div>
+                                   </div>
+                               </a>
+                               <!-- list item-->
+                               <a href="#" class="list-group-item">
+                                   <div class="media-box">
+                                       <div class="pull-left">
+                                           <em class="fa fa-credit-card fa-1x"></em>
+                                       </div>
+                                       <div class="media-box-body clearfix">
+                                           <p class="m0">Plano</p>
+                                           <p class="m0 text-muted">
+                                               <small>Pagamentos</small>
+                                           </p>
+                                       </div>
+                                   </div>
+                               </a>
+                               <!-- list item-->
+                               <a href="#" class="list-group-item">
+                                   <div class="media-box">
+                                       <div class="pull-left">
+                                           <em class="fa fa-graduation-cap fa-1x"></em>
+                                       </div>
+                                       <div class="media-box-body clearfix">
+                                           <p class="m0">Progresso</p>
+                                           <p class="m0 text-muted">
+                                               <small>Cursos completados</small>
+                                           </p>
+                                       </div>
+                                   </div>
+                               </a>
+                               <!-- last list item -->
+                               <a href="/logout/" class="list-group-item text-center">
+                                   <span class="fa fa-lock"> Sair</span>
+                                   <!-- <small class="pull-right">Sair</small> -->
+                               </a>
+                          </div>
+                       </li>
+                    </ul>
                 </li>
                 <!-- END Offsidebar menu-->
             </ul>
