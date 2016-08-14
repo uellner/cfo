@@ -64,3 +64,17 @@ mkvirtualenv --python=/usr/bin/python3.4 $PROJECT_NAME -r requirements.txt -a .;
 ###################
 
 ./manage.py migrate;
+
+#############
+# Amenities #
+#############
+
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'wellingtono@gmail.com', 'teste')" | python manage.py shell;
+echo -e '#!/bin/bash \n exec ./manage.py runserver 0.0.0.0:8000' > runserver;
+chmod +x runserver;
+
+################
+# LOCALE SETUP #
+################
+sudo locale-gen pt_BR;
+sudo locale-gen pt_BR.UTF-8;

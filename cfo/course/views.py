@@ -25,7 +25,7 @@ def dashboard(request):
 
 @render_to('activity.html')
 @login_required
-def activity(request, id):
+def activity(request, course_id, unit_id, lesson_id, id):
     activity = get_object_or_404(Activity, id=id)
     next_activity = (
         Activity.objects.filter(rank__gt=activity.rank)
@@ -80,9 +80,8 @@ def course(request, id):
     next_activity = Activity.objects.filter(lesson__unit__course=course).order_by('lesson__rank', 'rank')[0]
     return {
         'user_logout': reverse('logout_view'),
-        'course': {
-            'title': course.title,
-            'summary': course.summary,
+        'data': {
+            'obj': course,
             'next_activity': next_activity,
             'units': units,
         },

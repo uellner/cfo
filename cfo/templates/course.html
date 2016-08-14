@@ -8,10 +8,12 @@
                     <p>
                         <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb128">
                     </p>
-                    <h3 class="m-sm">{{ course.title }}</h3>
-                    <p>{{ course.summary }}</p>
+                    <h3 class="m-sm">{{ data.obj.title }}</h3>
+                    <p>{{ data.obj.summary }}</p>
                     <p>
-                        <a role="button" href="/activity/{{ course.next_activity.id }}/" class="btn btn-success btn-lg">Iniciar Agora!</a>
+                        <a role="button" href="{% url 'activity' course_id=data.obj.id unit_id=data.next_activity.lesson.unit.id lesson_id=data.next_activity.lesson.id id=data.next_activity.id %}" class="btn btn-success btn-lg">
+                            Iniciar Agora!
+                        </a>
                     </p>
                 </div>
             </div>
@@ -68,7 +70,7 @@
                </li>
                <!-- END timeline item-->
                <!-- START timeline item-->
-               {% for unit in course.units %}
+               {% for unit in data.units %}
                    <li class="{% if not forloop.counter|divisibleby:2 %}timeline-inverted{% endif %}">
                       <div class="timeline-badge green">
                          <em class="fa fa-file-o"></em>

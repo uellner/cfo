@@ -22,7 +22,11 @@ urlpatterns = [
     url(r'^login/',user_views.login_view, name='login_view'),
     url(r'^logout/',user_views.logout_view, name='logout_view'),
     url(r'^recover/',user_views.recover_view, name='recover_view'),
-    url(r'^activity/(?P<id>[0-9]+)/$', course_views.activity, name='activity'),
+    url(
+        r'^course/(?P<course_id>[0-9]+)/unit/(?P<unit_id>[0-9]+)/lesson/(?P<lesson_id>[0-9]+)/activity/(?P<id>[0-9]+)/$',
+        course_views.activity,
+        name='activity'
+    ),
     url(r'^next_or_prev/',course_views.next_or_prev, name='next_or_prev'),
     url(r'^unit/(?P<id>[0-9]+)/$', course_views.unit, name='unit'),
     url(r'^course/(?P<id>[0-9]+)/$', course_views.course, name='course'),

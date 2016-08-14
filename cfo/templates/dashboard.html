@@ -23,7 +23,7 @@
                         <h4 class="mt0">Último acesso em 01.05.2016</h4>
                         <p class="text-muted">Seu progresso</p>
                         <div class="progress progress-xl">
-                            <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-success progress-60">
+                            <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-info progress-60">
                                 <span class="sr-only-focusable">60%</span>
                             </div>
                         </div>
@@ -32,8 +32,10 @@
                 </div>
                 <div class="panel-footer text-center">
                     <p>
-                        <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-success btn-lg">Continuar Agora!</a>
-                        <!-- <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-warning btn-lg dashboard-button">Faça o simulado!</a> -->
+                        <!-- <a role="button" href="/activity/{{ next_activity.id }}/" class="btn btn-success btn-lg">Continuar Agora!</a> -->
+                        <a role="button" href="{% url 'activity' course_id=course.id unit_id=next_activity.lesson.unit.id lesson_id=next_activity.lesson.id id=next_activity.id %}" class="btn btn-info btn-lg">
+                            Continuar Agora!
+                        </a>
                     </p>
                 </div>
           </div>

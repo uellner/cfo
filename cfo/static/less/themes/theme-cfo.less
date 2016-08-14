@@ -14,7 +14,8 @@
 @aside-bg:                      #fff;
 // NAVBAR TOP
 
-@nav-top-bg:                    @brand-green;
+// @nav-top-bg:                    @brand-green;
+@nav-top-bg:                    #f5f7fa;
 @nav-top-bg-start:              @nav-top-bg;
 @nav-top-bg-end:                @nav-top-bg;
 @nav-header-bg:                 transparent;
@@ -22,7 +23,8 @@
 @nav-top-item-mobile:           @nav-top-bg;
 @nav-top-item-mobile-active:    darken(@nav-top-item-mobile, 20%);
 
-@nav-top-item-desktop:          #fff;
+// @nav-top-item-desktop:          #fff;
+@nav-top-item-desktop:          @brand-green;
 @nav-top-item-desktop-active:   darken(@nav-top-item-desktop, 20%);
 
 // SIDEBAR
@@ -69,6 +71,7 @@ body,
 
 .topnavbar {
   background-color: #fff;
+  // background-color: @brand-green;
   .navbar-header {
     background-color: @nav-header-bg;
     #gradient.horizontal(@nav-top-bg-start, @nav-top-bg-end);
@@ -77,11 +80,29 @@ body,
     }
   }
 
-  .navbar-nav > li > a,
-  .navbar-nav > .open > a {
-    color: @nav-top-item-mobile;
-    &:hover, &:focus {
-      color: @nav-top-item-mobile-active;
+  // .navbar-nav > li > a,
+  // .navbar-nav > .open > a {
+  //   color: @nav-top-item-mobile;
+  //   &:hover, &:focus {
+  //     color: @nav-top-item-mobile-active;
+  //   }
+  // }
+
+  .navbar-nav > li,
+  .navbar-nav > .open {
+    & > a {
+      color: @nav-top-item-desktop;
+      font-weight: 500;
+      border-bottom: 3px solid @nav-top-bg;
+      transition: border-color 0.5s ease, color 0.5s ease;
+    }
+    &:hover , &:focus, &.active {
+      > a {
+        color: darken(@nav-top-item-desktop, 5%);
+        background: @nav-header-bg;
+        border-bottom: 3px solid @nav-top-item-desktop;
+        transition: border-color 0.5s ease, color 0.5s ease;
+      }
     }
   }
 
@@ -120,11 +141,21 @@ body,
       }
     }
 
+    // .navbar-nav > li > a,
+    // .navbar-nav > .open > a {
+    //   color: @nav-top-item-desktop;
+    //   &:hover, &:focus {
+    //     color: @nav-top-item-mobile-active;
+    //   }
+    // }
+
     .navbar-nav > li > a,
     .navbar-nav > .open > a {
       color: @nav-top-item-desktop;
+    //   color: darken(@nav-top-item-desktop, 10%);
       &:hover, &:focus {
-        color: @nav-top-item-mobile-active;
+        color: darken(@nav-top-item-desktop, 15%);
+        transition: border-color 0.5s ease, color 0.5s ease;
       }
     }
 
