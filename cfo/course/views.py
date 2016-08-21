@@ -15,7 +15,9 @@ def index(request):
 @login_required
 def dashboard(request):
     current_course = get_object_or_404(Course, id=1)
-    next_activity = Activity.objects.filter(lesson__unit__course=current_course).order_by('lesson__rank', 'rank')[0]
+    next_activity = Activity.objects.filter(
+        lesson__unit__course=current_course
+    ).order_by('lesson__rank', 'rank')[0]
     return {
         'course': current_course,
         'next_activity': next_activity,
@@ -32,15 +34,19 @@ def activity(request, course_id, unit_id, lesson_id, id):
         .filter(lesson=activity.lesson)
         .order_by('rank').first()
     )
-    lesson_activities = Activity.objects.filter(lesson=activity.lesson).exclude(id=activity.id).order_by('rank')
+    lesson_activities = Activity.objects.filter(
+        lesson=activity.lesson
+    ).exclude(id=activity.id).order_by('rank')
     return {
         'user_logout': reverse('logout_view'),
-        'activity_video': activity.video,
-        'activity': activity,
-        'lesson_activities': lesson_activities,
-        'unit': activity.lesson.unit,
-        'lesson': activity.lesson,
-        'next_id': next_activity and next_activity.id or activity.id,
+        'data': {
+            'obj': activity,
+            'lesson_activities': lesson_activities,
+            'course': activity.lesson.unit.course,
+            'unit': activity.lesson.unit,
+            'lesson': activity.lesson,
+            'next_id': next_activity and next_activity.id or activity.id,
+        }
     }
 
 
@@ -56,14 +62,14 @@ def next_or_prev(request):
 
 @render_to('unit.html')
 @login_required
-def unit(request, id):
+def unit(request, course_id, id):
     unit = get_object_or_404(Unit, id=id)
     lessons = Lesson.objects.filter(unit=unit).order_by('rank')
     activities = Activity.objects.filter(lesson__unit=unit).order_by('lesson__rank', 'rank')
     return {
         'user_logout': reverse('logout_view'),
-        'unit': {
-            'title': unit.title,
+        'data': {
+            'obj': unit,
             'summary': unit.summary,
             'rank': unit.rank,
             'lessons': lessons,
@@ -77,7 +83,9 @@ def unit(request, id):
 def course(request, id):
     course = get_object_or_404(Course, id=id)
     units = Unit.objects.filter(course=course).order_by('rank')
-    next_activity = Activity.objects.filter(lesson__unit__course=course).order_by('lesson__rank', 'rank')[0]
+    next_activity = Activity.objects.filter(
+        lesson__unit__course=course
+    ).order_by('lesson__rank', 'rank')[0]
     return {
         'user_logout': reverse('logout_view'),
         'data': {

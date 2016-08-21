@@ -3,11 +3,11 @@
 {% load embed_video_tags %}
 {% block content %}
     {% load staticfiles %}
-   <div class="row">
+    <div class="row">
        <div class="col-lg-9">
            <div class="panel panel-default panel-video">
                <div class="responsive-video">
-                   {% video activity_video 'medium' %}
+                   {% video data.obj.video 'medium' %}
                </div>
            </div>
        </div>
@@ -15,24 +15,24 @@
            <div class="bg-cover">
                 <div class="p-sm text-center">
                     <p>
-                        <a href="/course/{{ unit.course.id }}/">
+                        <a href="{% url 'course' id=data.course.id %}">
                             <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb128">
                         </a>
                     </p>
                     <p class="m-sm">
-                        <a href="/unit/{{ unit.id }}/">
-                            Unidade {{ unit.rank }}
+                        <a href="{% url 'unit' course_id=data.course.id id=data.unit.id %}">
+                            Unidade {{ data.unit.rank }}
                         </a>
-                         > {{ lesson.title }}
+                         > {{ data.lesson.title }}
                     </p>
                     <p class="m-sm">
-                        <b>{{ activity.rank }} - {{ activity.title }} </b>
+                        <b>{{ data.obj.rank }} - {{ data.obj.title }} </b>
                     </p>
                  </div>
            </div>
            <div class="p-sm text-center">
                <form method="get" action="/next_or_prev/">
-                   <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ next_id }}">
+                   <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ data.next_id }}">
                        Próxima Atividade
                        <span class="btn-label btn-label-right"></span>
                    </button>
@@ -45,9 +45,9 @@
                           Selecione outra atividade desta lição <b class="caret"></b>
                       </button>
                       <ul role="menu" class="dropdown-menu animated fadeIn dropdown-menu-activity">
-                          {% for activity in lesson_activities %}
+                          {% for activity in data.lesson_activities %}
                              <li>
-                                 <a href="/activity/{{ activity.id }}/">
+                                 <a href="{% url 'activity' course_id=data.course.id unit_id=data.unit.id lesson_id=data.lesson.id id=data.obj.id %}">
                                      <b>{{ activity.rank }} - </b>{{ activity.title }}
                                  </a>
                              </li>
