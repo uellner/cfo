@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.conf import settings
-from .forms import LoginForm, RecoverForm
+from annoying.decorators import render_to
+from .forms import LoginForm, RecoverForm, StudentEditForm, UserEditForm
+from .models import Student
 
 
 def login_view(request):
@@ -63,3 +67,38 @@ def recover_view(request):
             "wrong_data": wrong_data
         }
     )
+
+
+@render_to('edit.html')
+@login_required
+def edit(request, student=None):
+    """
+        Form para edição de um estudante.
+    """
+    student_instance = student and get_object_or_404(Student, id=student) or None
+    user_instance = student_instance and student_instance.user or None
+    if request.method == "POST":
+        forms = [
+            UserEditForm(request.POST, instance=user_instance),
+            StudentEditForm(request.POST, instance=student_instance)
+        ]
+        if all([form.is_valid() for form in forms]):
+            user = forms[0].save(commit=False)
+            password = forms[0].cleaned_data['password']
+            if password:
+                user.set_password(password)
+            user.save()
+            # Save the new student
+            student = forms[1].save(commit=False)
+            student.user = user
+            student.save()
+            return redirect('dashboard',)
+    else:
+        forms = [UserEditForm(instance=user_instance), StudentEditForm(instance=student_instance)]
+
+    action = student and reverse('user_edit', kwargs={'student': student}) or reverse('user_new')
+    return {
+        'title': 'Perfil Estudante',
+        'action': action,
+        'forms': forms,
+    }

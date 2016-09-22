@@ -37,8 +37,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'annoying',
+    'cfo',
     'cfo.course',
+    'cfo.user',
+    'bootstrap3',
+    'crispy_forms',
+    'annoying',
     'menu',
     'embed_video',
 )
@@ -115,6 +119,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'cfo/static/dist/'
 ]
+
+# forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Media files (Images)
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')

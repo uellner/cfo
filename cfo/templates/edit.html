@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row">
+       <div class="col-xs-12">
+           <form method="POST" action="{{action}}" class="post-form">
+               {% csrf_token %}
+               {% if forms %}
+                 {% for form in forms  %}
+                   {% crispy form %}
+                 {% endfor %}
+               {% else %}
+                 {% crispy form %}
+               {% endif %}
+           </form>
+       </div>
+    </div>
+    {% if tabs %}
+        <div class="row">
+            <div class="col-xs-12">
+                {% include "tab.html" %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -52,6 +52,15 @@
         <script src="/static/vendor/jquery-ui/jquery-ui.min.js"></script>
         <!-- =============== APP SCRIPTS ===============-->
         <script src="/static/js/app.js"></script>
+        {% if form.media %}
+            {{ form.media }}
+        {% elif forms %}
+          {% for form in forms %}
+            {% if form.media %}
+                {{ form.media }}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
     {% endblock script %}
 </body>
 
