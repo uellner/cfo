@@ -20,6 +20,15 @@ class Course(models.Model):
         verbose_name = "Curso"
         verbose_name_plural = "Cursos"
 
+    def get_start_activity(self):
+        u"""
+            Returns the start activity of the course.
+        """
+        first_unit = Unit.objects.filter(course=self).order_by('rank').first()
+        first_lesson = Lesson.objects.filter(unit=first_unit).order_by('rank').first()
+        start_activity = Activity.objects.filter(lesson=first_lesson).order_by('rank').first()
+        return start_activity
+
 
 class Unit(models.Model):
     u"""
