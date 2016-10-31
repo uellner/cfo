@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
 from .models import Activity, Unit, Lesson, Course
+from ..user.models import CourseProgress
 
 
 @render_to('index.html')
@@ -14,15 +15,62 @@ def index(request):
 @render_to('dashboard.html')
 @login_required
 def dashboard(request):
-    current_course = get_object_or_404(Course, id=1)
-    next_activity = Activity.objects.filter(
-        lesson__unit__course=current_course
-    ).order_by('lesson__rank', 'rank')[0]
+    feature_course = get_object_or_404(Course, id=1)
+    student_progress = CourseProgress.objects.filter(student=request.user.profile).all()
+    student_courses = [cp.course for cp in student_progress]
+    next_activity = None
+    if feature_course in student_courses:
+        next_activity = feature_course.get_next_activity(request.user.profile)
     return {
-        'course': current_course,
+        'course': feature_course,
+        'student_courses': student_courses,
+        'student_progress': student_progress,
         'next_activity': next_activity,
         'user_logout': reverse('logout_view'),
     }
+
+
+@login_required
+def start_course(request, course_id):
+    """ Start a course """
+    course = get_object_or_404(Course, id=course_id)
+    next_activity = course.start(request.user.profile)
+    return redirect(
+        reverse(
+            'activity',
+            args=(
+                course.id,
+                next_activity.lesson.id,
+                next_activity.lesson.unit.id,
+                next_activity.id
+            )
+        )
+    )
+
+
+@login_required
+def finish_activity(request, course_id, activity_id):
+    """ Finisht an activity """
+    activity = get_object_or_404(Activity, id=activity_id)
+    student_progress = activity.finish(request.user.profile)
+    if student_progress:
+        next_activity = student_progress.course.get_next_activity(
+            request.user.profile
+        )
+    else:
+        # Error! What to do?
+        pass
+    return redirect(
+        reverse(
+            'activity',
+            args=(
+                next_activity.lesson.unit.course.id,
+                next_activity.lesson.id,
+                next_activity.lesson.unit.id,
+                next_activity.id
+            )
+        )
+    )
 
 
 @render_to('activity.html')
@@ -82,10 +130,16 @@ def unit(request, course_id, id):
 @login_required
 def course(request, id):
     course = get_object_or_404(Course, id=id)
-    units = Unit.objects.filter(course=course).order_by('rank')
-    next_activity = Activity.objects.filter(
-        lesson__unit__course=course
-    ).order_by('lesson__rank', 'rank')[0]
+    student_courses = list(request.user.profile.courses.all())
+    if not student_courses or course not in student_courses:
+        next_activity = course.get_start_activity()
+        # request.user.profile.courses.add(course)
+        units = Unit.objects.filter(course=course).order_by('rank')
+    else:
+        units = Unit.objects.filter(course=course).order_by('rank')
+        next_activity = Activity.objects.filter(
+            lesson__unit__course=course
+        ).order_by('lesson__rank', 'rank')[0]
     return {
         'user_logout': reverse('logout_view'),
         'data': {

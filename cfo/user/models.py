@@ -26,8 +26,3 @@ class CourseProgress(models.Model):
     student = models.ForeignKey('Student')
     # Saving the current activity
     activity = models.ForeignKey('course.Activity', blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.activity:
-            self.activity = self.course.get_start_activity()
-        super(CourseProgress, self).save(*args, **kwargs)

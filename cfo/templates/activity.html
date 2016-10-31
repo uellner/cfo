@@ -31,12 +31,9 @@
                  </div>
            </div>
            <div class="p-sm text-center">
-               <form method="get" action="/next_or_prev/">
-                   <button type="submit" class="btn btn-labeled btn-info" name="next" value="{{ data.next_id }}">
-                       Próxima Atividade
-                       <span class="btn-label btn-label-right"></span>
-                   </button>
-               </form>
+               <a role="button" href="{% url 'finish_activity' course_id=data.course.id activity_id=data.obj.id %}" class="btn btn-labeled btn-info">
+                   Finalizar Atividade
+               </a>
            </div>
            <div class="p-sm">
                <div class="box-placeholder">
