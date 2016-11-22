@@ -46,7 +46,11 @@
                                                               <tr>
                                                                  <td>{{ activity.title }}</td>
                                                                  <td>
-                                                                    <div class="label label-success">Completa</div>
+                                                                     {% if activity.lesson.rank == data.course_progress.activity.lesson.rank and activity.rank <= data.course_progress.activity.rank or activity.lesson.rank < data.course_progress.activity.lesson.rank %}
+                                                                        <div class="label label-success">Completa</div>
+                                                                     {% else %}
+                                                                        <div class="label label-warning">Pendente</div>
+                                                                     {% endif %}
                                                                  </td>
                                                                  <td>
                                                                      <a href="{% url 'activity' course_id=data.obj.course.id unit_id=data.obj.id lesson_id=lesson.id id=activity.id %}" class="btn btn-labeled btn-info btn-xs" name="next" value="">

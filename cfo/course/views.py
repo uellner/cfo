@@ -21,10 +21,12 @@ def dashboard(request):
     next_activity = None
     if feature_course in student_courses:
         next_activity = feature_course.get_next_activity(request.user.profile)
+        feature_course_progress = CourseProgress.objects.filter(student=request.user.profile, course=feature_course).first()
     return {
         'course': feature_course,
         'student_courses': student_courses,
         'student_progress': student_progress,
+        'feature_course_progress': feature_course_progress,
         'next_activity': next_activity,
         'user_logout': reverse('logout_view'),
     }
@@ -114,6 +116,10 @@ def unit(request, course_id, id):
     unit = get_object_or_404(Unit, id=id)
     lessons = Lesson.objects.filter(unit=unit).order_by('rank')
     activities = Activity.objects.filter(lesson__unit=unit).order_by('lesson__rank', 'rank')
+    course = get_object_or_404(Course, id=course_id)
+    course_progress = CourseProgress.objects.filter(student=request.user.profile, course=course).all()
+    if course_progress:
+        course_progress = course_progress[0]
     return {
         'user_logout': reverse('logout_view'),
         'data': {
@@ -121,7 +127,8 @@ def unit(request, course_id, id):
             'summary': unit.summary,
             'rank': unit.rank,
             'lessons': lessons,
-            'activities': activities
+            'activities': activities,
+            'course_progress': course_progress
         },
     }
 
@@ -130,21 +137,21 @@ def unit(request, course_id, id):
 @login_required
 def course(request, id):
     course = get_object_or_404(Course, id=id)
-    student_courses = list(request.user.profile.courses.all())
-    if not student_courses or course not in student_courses:
+    units = Unit.objects.filter(course=course).order_by('rank')
+    course_progress = CourseProgress.objects.filter(
+        student=request.user.profile, course=course
+    ).all()
+    if not course_progress:
         next_activity = course.get_start_activity()
-        # request.user.profile.courses.add(course)
-        units = Unit.objects.filter(course=course).order_by('rank')
     else:
-        units = Unit.objects.filter(course=course).order_by('rank')
-        next_activity = Activity.objects.filter(
-            lesson__unit__course=course
-        ).order_by('lesson__rank', 'rank')[0]
+        course_progress = course_progress[0]
+        next_activity = course.get_next_activity(request.user.profile)
     return {
         'user_logout': reverse('logout_view'),
         'data': {
             'obj': course,
             'next_activity': next_activity,
             'units': units,
+            'course_progress': course_progress,
         },
     }

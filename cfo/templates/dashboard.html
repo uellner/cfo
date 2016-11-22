@@ -9,7 +9,7 @@
                         {% if course in student_courses %}
                             Último curso em andamento
                         {% else %}
-                            Curso Recomendado
+                            Curso Destaque
                         {% endif %}
                     </h4>
                     <hr>
@@ -27,14 +27,14 @@
                     </div>
                     <div class="col-lg-9">
                         {% if course in student_courses %}
-                            <h4 class="mt0">Último acesso em 01.05.2016</h4>
+                            <h4 class="mt0">Última atividade em {{ feature_course_progress.modified_at|date:"d.m.Y - H:i" }}</h4>
                         {% else %}
                             <h4 class="mt0">16 horas estimadas</h4>
                         {% endif %}
                         <p class="text-muted">Seu progresso</p>
-                        <div class="progress progress-xl">
-                            <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="70" class="progress-bar progress-bar-info progress-60">
-                                <span class="sr-only-focusable">60%</span>
+                        <div class="progress progress-xl mb10">
+                            <div role="progressbar" aria-valuenow="{{ feature_course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-info progress-{{ feature_course_progress.progress_left }}">
+                                <span class="sr-only-focusable">{{ feature_course_progress.progress_left }}</span>
                             </div>
                         </div>
                         <p>{{ course.summary }}</p>

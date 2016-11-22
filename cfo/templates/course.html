@@ -11,9 +11,15 @@
                     <h3 class="m-sm">{{ data.obj.title }}</h3>
                     <p>{{ data.obj.summary }}</p>
                     <p>
-                        <a role="button" href="{% url 'activity' course_id=data.obj.id unit_id=data.next_activity.lesson.unit.id lesson_id=data.next_activity.lesson.id id=data.next_activity.id %}" class="btn btn-success btn-lg">
-                            Iniciar Agora!
-                        </a>
+                        {% if data.course_progress %}
+                            <a role="button" href="{% url 'activity' course_id=data.obj.id unit_id=data.next_activity.lesson.unit.id lesson_id=data.next_activity.lesson.id id=data.next_activity.id %}" class="btn btn-success btn-lg">
+                                Continuar
+                            </a>
+                        {% else %}
+                            <a role="button" href="{% url 'activity' course_id=data.obj.id unit_id=data.next_activity.lesson.unit.id lesson_id=data.next_activity.lesson.id id=data.next_activity.id %}" class="btn btn-success btn-lg">
+                                Iniciar Agora!
+                            </a>
+                        {% endif %}
                     </p>
                 </div>
             </div>
@@ -23,7 +29,6 @@
                         <h3 class="m0">102</h3>
                         <p class="m0">
                             <span class="hidden-xs">Atividades</span>
-                            <!-- <span>Atividades</span> -->
                         </p>
                     </div>
                     <div class="col-xs-4 br">
