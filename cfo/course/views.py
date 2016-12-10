@@ -15,13 +15,16 @@ def index(request):
 @render_to('dashboard.html')
 @login_required
 def dashboard(request):
+    """ Dashboard """
     feature_course = get_object_or_404(Course, id=1)
     student_progress = CourseProgress.objects.filter(student=request.user.profile).all()
     student_courses = [cp.course for cp in student_progress]
     next_activity = None
     if feature_course in student_courses:
         next_activity = feature_course.get_next_activity(request.user.profile)
-        feature_course_progress = CourseProgress.objects.filter(student=request.user.profile, course=feature_course).first()
+        feature_course_progress = CourseProgress.objects.filter(
+            student=request.user.profile, course=feature_course
+        ).first()
     return {
         'course': feature_course,
         'student_courses': student_courses,
@@ -51,14 +54,35 @@ def start_course(request, course_id):
 
 
 @login_required
+def resume_course(request, course_id):
+    """ Resume a course """
+    course = get_object_or_404(Course, id=course_id)
+    current_activity = course.get_next_activity(request.user.profile)
+    return redirect(
+        reverse(
+            'activity',
+            args=(
+                course.id,
+                current_activity.lesson.id,
+                current_activity.lesson.unit.id,
+                current_activity.id
+            )
+        )
+    )
+
+
+@login_required
 def finish_activity(request, course_id, activity_id):
-    """ Finisht an activity """
+    """ Finish an activity """
     activity = get_object_or_404(Activity, id=activity_id)
     student_progress = activity.finish(request.user.profile)
     if student_progress:
         next_activity = student_progress.course.get_next_activity(
             request.user.profile
         )
+        if not next_activity:
+            student_progress.course.finish(request.user.profile)
+            return redirect('dashboard')
     else:
         # Error! What to do?
         pass

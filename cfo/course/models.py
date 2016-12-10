@@ -21,15 +21,6 @@ class Course(models.Model):
         verbose_name = "Curso"
         verbose_name_plural = "Cursos"
 
-    def get_start_activity(self):
-        u"""
-            Returns the start activity of the course.
-        """
-        first_unit = Unit.objects.filter(course=self).order_by('rank').first()
-        first_lesson = Lesson.objects.filter(unit=first_unit).order_by('rank').first()
-        start_activity = Activity.objects.filter(lesson=first_lesson).order_by('rank').first()
-        return start_activity
-
     def start(self, student):
         u"""
             Start a course.
@@ -45,6 +36,40 @@ class Course(models.Model):
         course_progress.save()
         return course_progress.activity
 
+    def finish(self, student):
+        u"""
+            Finish a course.
+        """
+        if not student:
+            return False
+
+        course_progress = CourseProgress.objects.filter(
+            course=self,
+            student=student
+        )
+
+        if not course_progress:
+            return None
+
+        course_progress = course_progress[0]
+
+        # if the course progress is not completed, finish the course.
+        if not course_progress.is_completed:
+            course_progress.is_completed = True
+            course_progress.activity = self.get_start_activity()
+            course_progress.save()
+
+        return course_progress.activity
+
+    def get_start_activity(self):
+        u"""
+            Returns the start activity of the course.
+        """
+        first_unit = Unit.objects.filter(course=self).order_by('rank').first()
+        first_lesson = Lesson.objects.filter(unit=first_unit).order_by('rank').first()
+        start_activity = Activity.objects.filter(lesson=first_lesson).order_by('rank').first()
+        return start_activity
+
     def get_next_unit(self, current_unit):
         u"""
             Returns the next unit of the course.
@@ -53,10 +78,30 @@ class Course(models.Model):
             return None
 
         next_unit = Unit.objects.filter(
-            unit=self,
+            course=self,
             rank__gt=current_unit.rank
         ).order_by('rank').all()
+
         return next_unit and next_unit[0] or None
+
+    def get_current_activity(self, student):
+        u"""
+            Returns the current activity of the course.
+        """
+        if not student:
+            return None
+
+        course_progress = CourseProgress.objects.filter(
+            student=student,
+            course=self
+        )
+
+        if not course_progress:
+            return None
+
+        course_progress = course_progress[0]
+
+        return Activity.objects.get(id=course_progress.activity.id)
 
     def get_next_activity(self, student):
         u"""
@@ -88,7 +133,7 @@ class Course(models.Model):
                     course_progress.activity.lesson.unit
                 )
                 if not next_unit:
-                    # TODO Course has been completed, we should decide what to do.
+                    # TODO Course has been completed, what to do now?
                     return None
 
                 # Another lesson has been found!
@@ -213,7 +258,7 @@ class Activity(models.Model):
         course_progress = CourseProgress.objects.filter(
             student=student,
             course=self.lesson.unit.course
-        ).all()
+        )
 
         if not course_progress:
             return None

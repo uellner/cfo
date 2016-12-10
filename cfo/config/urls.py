@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^course/(?P<course_id>[0-9]+)/unit/(?P<id>[0-9]+)/$', course_views.unit, name='unit'),
     url(r'^course/(?P<id>[0-9]+)/$', course_views.course, name='course'),
     url(r'^course/(?P<course_id>[0-9]+)/start/$', course_views.start_course, name='start_course'),
+    url(r'^course/(?P<course_id>[0-9]+)/resume/$', course_views.resume_course, name='resume-course'),
     url(r'^course/(?P<course_id>[0-9]+)/finish-activity/(?P<activity_id>[0-9]+)/$', course_views.finish_activity, name='finish_activity'),
     url(r'^dashboard/', course_views.dashboard, name='dashboard'),
     url(r'^', course_views.index, name='index'),

@@ -27,12 +27,28 @@ class CourseProgress(TimeStampedModel):
     student = models.ForeignKey('Student')
     # Saving the current activity
     activity = models.ForeignKey('course.Activity', blank=True)
+    # Flag to indicate whether the course is completed or not
+    is_completed = models.BooleanField(default=False)
 
     @property
     def progress_left(self):
         from ..course.models import Activity
-        # Returns the percent progress of the course based on current rank acitivity.
-        completed_activities = Activity.objects.filter(lesson__unit__course=self.course, rank__lte=self.activity.rank).count()
+
+        if self.is_completed:
+            return '{:.0f}%'.format(100)
+
+        # Returns the sum of activities of past lessons
+        past_lesson_activities = Activity.objects.filter(lesson__unit__course=self.course, lesson__rank__lt=self.activity.lesson.rank).count()
+        # Returns the sum of past activities of the same lesson
+        past_activities = Activity.objects.filter(lesson__unit__course=self.course, lesson=self.activity.lesson, rank__lte=self.activity.rank).count()
+        # Returns the sum of activities
         total_activities = Activity.objects.filter(lesson__unit__course=self.course).count()
-        percent_activities = min(completed_activities / total_activities * 100, 100)
+        percent_activities = min((past_lesson_activities + past_activities) / total_activities * 100, 100)
         return '{:.0f}%'.format(percent_activities)
+
+    @property
+    def progress_colour(self):
+        if self.is_completed:
+            return 'success'
+        else:
+            return 'info'

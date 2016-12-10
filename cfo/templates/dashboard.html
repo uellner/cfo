@@ -33,7 +33,7 @@
                         {% endif %}
                         <p class="text-muted">Seu progresso</p>
                         <div class="progress progress-xl mb10">
-                            <div role="progressbar" aria-valuenow="{{ feature_course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-info progress-{{ feature_course_progress.progress_left }}">
+                            <div role="progressbar" aria-valuenow="{{ feature_course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-{{ feature_course_progress.progress_colour }} progress-{{ feature_course_progress.progress_left }}">
                                 <span class="sr-only-focusable">{{ feature_course_progress.progress_left }}</span>
                             </div>
                         </div>
@@ -43,9 +43,15 @@
                 <div class="panel-footer text-center">
                     <p>
                         {% if course in student_courses %}
-                            <a role="button" href="{% url 'activity' course_id=course.id unit_id=next_activity.lesson.unit.id lesson_id=next_activity.lesson.id id=next_activity.id %}" class="btn btn-info btn-lg">
-                                Continuar Agora!
-                            </a>
+                            {% if not feature_course_progress.is_completed %}
+                                <a role="button" href="{% url 'resume-course' course_id=course.id %}" class="btn btn-info btn-lg">
+                                    Continuar Agora!
+                                </a>
+                            {% else %}
+                                <a role="button" href="{% url 'resume-course' course_id=course.id %}" class="btn btn-success btn-lg">
+                                    Revisar Conteúdo
+                                </a>
+                            {% endif %}
                         {% else %}
                             <a role="button" href="{% url 'start_course' course_id=course.id %}" class="btn btn-info btn-lg">
                                 Iniciar Agora!
