@@ -5,11 +5,36 @@
     {% load staticfiles %}
     <div class="row">
        <div class="col-lg-9">
-           <div class="panel panel-default panel-video">
-               <div class="responsive-video">
-                   {% video data.obj.video 'medium' %}
+           {% if data.is_activity %}
+               <div class="panel panel-default panel-video">
+                   <div class="responsive-video">
+                       {% video data.obj.video 'medium' %}
+                   </div>
                </div>
-           </div>
+           {% else %}
+               <div class="panel">
+                   <div class="panel-body">
+                       <h3>
+                           <em class="fa fa-trophy"></em>
+                           Unidade Concluída!
+                       </h3>
+                       <p class="p-md">
+                           Parabéns você assistiu a todas as aulas da unidade <b> {{ data.unit.title }} </b> do curso <b>{{ data.course.title }}</b>.
+                           <p class="p-md">Clique em <a role="button" href="{% url 'finish_activity' course_id=data.course.id activity_id=data.obj.id %}" class="btn btn-labeled btn-success">
+                               Avançar
+                           </a> para proseguir com a resolução dos exercícios dessa unidade.</p>
+                           <p class="p-md">Se você preferir clique em <a role="button" href="{% url 'finish_activity' course_id=data.course.id activity_id=data.obj.id %}" class="btn btn-labeled btn-warning">
+                               Próxima Unidade
+                           </a> para pular os exercícios e ir para a unidade seguinte.</p>
+                           <p class="p-md">
+                           Você poderá acessar os exercícios a qualquer momento a partir do seu <a role="button" href="{% url 'dashboard' %}" class="btn btn-labeled btn-info">
+                               Dashboard
+                           </a>
+                       </p>
+                       </p>
+                   </div>
+               </div>
+           {% endif %}
        </div>
        <div class="col-lg-3">
            <div class="bg-cover">
@@ -23,10 +48,12 @@
                         <a href="{% url 'unit' course_id=data.course.id id=data.unit.id %}">
                             Unidade {{ data.unit.rank }}
                         </a>
-                         > {{ data.lesson.title }}
                     </p>
                     <p class="m-sm">
-                        <b>{{ data.obj.rank }} - {{ data.obj.title }} </b>
+                         {{ data.lesson.title }}
+                    </p>
+                    <p class="m-sm">
+                        <b>{{ data.obj.title }} </b>
                     </p>
                  </div>
            </div>
