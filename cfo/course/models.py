@@ -168,7 +168,7 @@ class Unit(models.Model):
             Returns the first lesson of the unit.
         """
         next_lesson = Lesson.objects.filter(
-            lesson=self,
+            unit=self,
         ).order_by('rank').all()
         return next_lesson and next_lesson[0] or None
 

@@ -77,12 +77,19 @@ def finish_activity(request, course_id, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     student_progress = activity.finish(request.user.profile)
     if student_progress:
+        current_unit = student_progress.activity.lesson.unit
         next_activity = student_progress.course.get_next_activity(
             request.user.profile
         )
+        # Course is over
         if not next_activity:
             student_progress.course.finish(request.user.profile)
             return redirect('dashboard')
+        # Unit is over
+        if current_unit != next_activity.lesson.unit:
+            return redirect(
+                reverse('unit-finish', args=(course_id, current_unit.id))
+            )
     else:
         # Error! What to do?
         pass
@@ -152,6 +159,28 @@ def unit(request, course_id, id):
             'rank': unit.rank,
             'lessons': lessons,
             'activities': activities,
+            'course_progress': course_progress
+        },
+    }
+
+
+@render_to('unit_finish.html')
+@login_required
+def unit_finish(request, course_id, id):
+    unit = get_object_or_404(Unit, id=id)
+    course = get_object_or_404(Course, id=course_id)
+    next_activity = course.get_next_activity(request.user.profile)
+    course_progress = CourseProgress.objects.filter(
+        student=request.user.profile, course=course
+    ).all()
+    if course_progress:
+        course_progress = course_progress[0]
+    return {
+        'user_logout': reverse('logout_view'),
+        'data': {
+            'obj': unit,
+            'course': course,
+            'next_activity': next_activity,
             'course_progress': course_progress
         },
     }

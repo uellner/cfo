@@ -30,6 +30,7 @@ urlpatterns = [
     ),
     url(r'^next_or_prev/',course_views.next_or_prev, name='next_or_prev'),
     url(r'^course/(?P<course_id>[0-9]+)/unit/(?P<id>[0-9]+)/$', course_views.unit, name='unit'),
+    url(r'^course/(?P<course_id>[0-9]+)/unit/(?P<id>[0-9]+)/finish/$', course_views.unit_finish, name='unit-finish'),
     url(r'^course/(?P<id>[0-9]+)/$', course_views.course, name='course'),
     url(r'^course/(?P<course_id>[0-9]+)/start/$', course_views.start_course, name='start_course'),
     url(r'^course/(?P<course_id>[0-9]+)/resume/$', course_views.resume_course, name='resume-course'),

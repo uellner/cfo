@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    {% load staticfiles %}
+    <div class="row">
+       <div class="col-lg-12">
+           <div class="panel">
+               <div class="panel-body">
+                   <h3>
+                       <em class="fa fa-trophy"></em>
+                       Unidade Concluída!
+                   </h3>
+                   <p class="p-md">
+                       Parabéns você assistiu a todas as aulas da unidade <b> {{ data.course_progress.activity.lesson.unit.title }} </b> do curso <b>{{ data.course.title }}</b>.
+                       <p class="p-md">Clique em <a role="button" href="{% url 'finish_activity' course_id=data.course.id activity_id=data.obj.id %}" class="btn btn-labeled btn-success">
+                           Avançar
+                       </a> para proseguir com a resolução dos exercícios dessa unidade.</p>
+                       <p class="p-md">Se você preferir clique em <a role="button" href="{% url 'activity' course_id=data.course.id unit_id=data.next_activity.lesson.unit.id lesson_id=data.next_activity.lesson.id id=data.next_activity.id %}" class="btn btn-labeled btn-warning">
+                           Próxima Unidade
+                       </a> para pular os exercícios e ir para a unidade seguinte.</p>
+                       <p class="p-md">
+                       Você poderá acessar os exercícios a qualquer momento a partir do seu <a role="button" href="{% url 'dashboard' %}" class="btn btn-labeled btn-info">
+                           Dashboard
+                       </a>
+                   </p>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </div>
+{% endblock content %}
