@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'cfo',
     'cfo.course',
     'cfo.user',
+    'cfo.quiz',
     'bootstrap3',
     'crispy_forms',
     'annoying',
