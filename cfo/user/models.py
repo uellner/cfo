@@ -8,8 +8,9 @@ class Student(models.Model):
         Student users.
     """
     user = models.OneToOneField(User, verbose_name="Usuário", on_delete=models.CASCADE, related_name='profile')
-    phone = models.CharField(max_length=32, verbose_name='Telefone', null=True, blank=True)
+    phone = models.CharField(max_length=32, null=True, blank=True, verbose_name='Telefone')
     courses = models.ManyToManyField('course.Course', blank=True, through='CourseProgress', verbose_name='Cursos')
+    quizzes = models.ManyToManyField('quiz.Quiz', blank=True, through='QuizProgress', verbose_name='Simulados')
 
     def __str__(self):
         return "%s" % (self.user.get_full_name())
@@ -54,3 +55,19 @@ class CourseProgress(TimeStampedModel):
             return 'success'
         else:
             return 'info'
+
+
+class QuizProgress(TimeStampedModel):
+    u"""
+        Quiz progress by a student.
+    """
+    quiz = models.ForeignKey('quiz.Quiz', verbose_name="Quiz")
+    student = models.ForeignKey('user.Student', verbose_name="Estudante")
+    # Quantity of questions for this quiz
+    sample = models.IntegerField(default=10, verbose_name="Quantidade de Questões")
+    # Questions answered
+    answer = models.IntegerField(default=0, verbose_name="Respostas")
+    # Score based on answers
+    score = models.IntegerField(default=0, verbose_name="Desempenho")
+    # Flag to indicate whether the quiz is completed or not
+    is_completed = models.BooleanField(default=False)

@@ -16,6 +16,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from ..course import views as course_views
 from ..user import views as user_views
+from ..quiz import views as quiz_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,12 +24,12 @@ urlpatterns = [
     url(r'^logout/',user_views.logout_view, name='logout_view'),
     url(r'^recover/',user_views.recover_view, name='recover_view'),
     url(r'^student/(?P<student>[0-9]+)/$', user_views.edit, name='user_edit'),
+    url(r'^quiz/course/(?P<course_id>[0-9]+)/start/$', quiz_views.start_quiz, name='start-quiz'),
     url(
         r'^course/(?P<course_id>[0-9]+)/unit/(?P<unit_id>[0-9]+)/lesson/(?P<lesson_id>[0-9]+)/activity/(?P<id>[0-9]+)/$',
         course_views.activity,
         name='activity'
     ),
-    # url(r'^next_or_prev/',course_views.next_or_prev, name='next_or_prev'),
     url(r'^course/(?P<course_id>[0-9]+)/unit/(?P<id>[0-9]+)/$', course_views.unit, name='unit'),
     url(r'^course/(?P<course_id>[0-9]+)/unit/(?P<id>[0-9]+)/finish/$', course_views.unit_finish, name='unit-finish'),
     url(r'^course/(?P<id>[0-9]+)/$', course_views.course, name='course'),

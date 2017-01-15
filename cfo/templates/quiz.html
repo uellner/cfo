@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <div class="row">
+       <div class="col-lg-9">
+           <div class="panel panel-video">
+               <div class="responsive-video">
+
+               </div>
+           </div>
+       </div>
+       <div class="col-lg-3">
+           <div class="panel panel-video">
+               <div class="bg-cover">
+                    <div class="p-sm text-center">
+                        <p>
+                            <a href="">
+                                <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb96">
+                            </a>
+                        </p>
+                        <p class="m-sm">
+                            <a href="">
+                                Unidade
+                            </a>
+                        </p>
+                        <p class="m-sm">
+                        </p>
+                        <p class="m-sm">
+                        </p>
+                     </div>
+               </div>
+               <hr>
+               <div class="p-sm text-center">
+                   <a role="button" href="" class="btn btn-labeled btn-info" style="display:block">
+                       Finalizar Atividade
+                   </a>
+               </div>
+           </div>
+       </div>
+   </div>
+{% endblock content %}

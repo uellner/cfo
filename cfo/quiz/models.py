@@ -6,11 +6,10 @@ class Quiz(models.Model):
         Classe que representa um quiz (conjunto de perguntas e respostas).
     """
     course = models.ForeignKey('course.Course', verbose_name="Curso")
-    unit = models.ForeignKey('course.Unit', verbose_name="Unidade")
     questions = models.ManyToManyField('quiz.Question', blank=True, verbose_name='Questões')
 
     def __str__(self):
-        return self.course.title + ' [ ' + self.unit.title + ' ]'
+        return self.course.title
 
     class Meta:
         verbose_name = "Quiz"
@@ -39,6 +38,7 @@ class Question(models.Model):
     """
     description = models.TextField(verbose_name="Pergunta")
     comment = models.TextField(null=True, blank=True, verbose_name="Comentário")
+    units = models.ManyToManyField('course.Unit', blank=True, verbose_name='Unidades')
 
     def __str__(self):
         return self.description
