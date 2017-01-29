@@ -1,30 +1,92 @@
 {% extends 'index.html' %}
-
 {% block content %}
     {% load staticfiles %}
     <div class="row">
-       <div class="col-lg-12">
+       <div class="col-lg-9">
            <div class="panel">
+              <div class="panel-body">
+                  <h3>
+                      <em class="fa fa-trophy"></em>
+                      Unidade Concluída!
+                  </h3>
+                  <p class="p-md">
+                      <p class="lead">Parabéns! Você assistiu a todas as aulas da <b>unidade {{ data.obj.id }}</b> do curso <b> {{ data.course.title }}.</b></p>
+                      <p class="text-muted">Acompanhe o seu progresso no curso</p>
+                      <div class="progress progress-xl mb10">
+                          <div role="progressbar" aria-valuenow="{{ data.course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-{{ data.course_progress.progress_colour }} progress-{{ data.course_progress.progress_left }}">
+                              <span class="sr-only-focusable">{{ data.course_progress.progress_left }}</span>
+                          </div>
+                      </div>
+                      <p class="p-md">
+                          Clique em
+                          <button type="button" class="btn btn-default btn-oval">
+                              <em class="fa fa-play fa-fw text-muted"></em>
+                              <span>Iniciar</span>
+                          </button>
+                          no painel ao lado para <b>proseguir com a resolução dos exercícios dessa unidade</b>.
+                      </p>
+                      <p class="p-md">
+                          Se você preferir pular os exercícios e iniciar a unidade seguinte, clique <a href="{% url 'resume-course' course_id=data.course.id %}">Iniciar Próxima Unidade</a>.
+                          Você poderá realizar o simulado desta unidade a qualquer momento a partir do seu <b>Dashboard</b>.
+                      </p>
+                  </p>
+              </div>
+           </div>
+       </div>
+       <div class="col-lg-3">
+           <!-- <div class="panel b"> -->
+           <div class="panel">
+               <!-- <div class="panel-body bb"> -->
                <div class="panel-body">
-                   <h3>
-                       <em class="fa fa-trophy"></em>
-                       Unidade Concluída!
-                   </h3>
-                   <p class="p-md">
-                       Parabéns você assistiu a todas as aulas da unidade <b> {{ data.course_progress.activity.lesson.unit.title }} </b> do curso <b>{{ data.course.title }}</b>.
-                       <p class="p-md">Clique em <a role="button" href="{% url 'finish_activity' course_id=data.course.id activity_id=data.obj.id %}" class="btn btn-labeled btn-success">
-                           Avançar
-                       </a> para proseguir com a resolução dos exercícios dessa unidade.</p>
-                       <p class="p-md">Se você preferir clique em <a role="button" href="{% url 'activity' course_id=data.course.id unit_id=data.next_activity.lesson.unit.id lesson_id=data.next_activity.lesson.id id=data.next_activity.id %}" class="btn btn-labeled btn-warning">
-                           Próxima Unidade
-                       </a> para pular os exercícios e ir para a unidade seguinte.</p>
-                       <p class="p-md">
-                       Você poderá acessar os exercícios a qualquer momento a partir do seu <a role="button" href="{% url 'dashboard' %}" class="btn btn-labeled btn-info">
-                           Dashboard
-                       </a>
-                   </p>
-                   </p>
+                   <div class="bg-cover">
+                       <div class="p-sm text-center">
+                           <p>
+                               <a href="">
+                                   <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb96">
+                               </a>
+                            </p>
+                            <p class="lead">
+                                Comece agora o simulado da unidade {{ data.obj.id }}!
+                            </p>
+                         </div>
+                   </div>
+                   <div class="clearfix">
+                       <div class="text-center">
+                           <button type="button" class="btn btn-default btn-oval">
+                               <em class="fa fa-play fa-fw text-muted"></em>
+                               <span>Iniciar</span>
+                           </button>
+                       </div>
+                   </div>
                </div>
+               <!-- <div class="panel-body">
+                   <div class="table-grid table-grid-align-middle mv">
+                       <div class="col">
+                           <div class="progress progress-xs m0">
+                               <div style="width: 48%" class="progress-bar progress-bar-info">48%</div>
+                           </div>
+                       </div>
+                       <div class="col wd-xxs text-right">
+                           <div class="text-bold text-muted">48%</div>
+                       </div>
+                   </div>
+               </div> -->
+               <table class="table bb">
+                   <tbody>
+                       <tr>
+                           <td>
+                               <strong>Número de Questões</strong>
+                           </td>
+                           <td>10</td>
+                       </tr>
+                       <tr>
+                           <td>
+                               <strong>Tempo Estimado</strong>
+                           </td>
+                           <td>15 minutos</td>
+                       </tr>
+                   </tbody>
+               </table>
            </div>
        </div>
    </div>

@@ -131,16 +131,6 @@ def activity(request, course_id, unit_id, lesson_id, id):
     }
 
 
-# def next_or_prev(request):
-#     activity_id = None
-#     if 'next' in request.GET:
-#         activity_id = request.GET['next']
-#     if 'prev' in request.GET:
-#         activity_id = request.GET['prev']
-#
-#     return redirect('activity', id=activity_id)
-
-
 @render_to('unit.html')
 @login_required
 def unit(request, course_id, id):

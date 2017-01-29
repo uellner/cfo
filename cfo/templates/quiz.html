@@ -3,14 +3,43 @@
     {% load staticfiles %}
     <div class="row">
        <div class="col-lg-9">
-           <div class="panel panel-video">
-               <p>Pergunta sobre a primeira questão do simulado?</p>
+           <div class="panel">
+              <div class="panel-body">
+                  <h3>
+                      <em class="fa fa-trophy"></em>
+                      Unidade Concluída!
+                  </h3>
+                  <p class="p-md">
+                      <p class="lead">Parabéns! Você assistiu a todas as aulas da unidade <b> 1 </b> do curso <b> Curso 1 </b>.</p>
+                      <p class="text-muted">Acompanhe o seu progresso no curso</p>
+                      <div class="progress progress-xl mb10">
+                          <div role="progressbar" aria-valuenow="{{ feature_course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-{{ feature_course_progress.progress_colour }} progress-{{ feature_course_progress.progress_left }}">
+                              <span class="sr-only-focusable">{{ feature_course_progress.progress_left }}</span>
+                          </div>
+                      </div>
+                      <p class="p-md">
+                          Clique em
+                          <button type="button" class="btn btn-default btn-oval">
+                              <em class="fa fa-play fa-fw text-muted"></em>
+                              <span>Iniciar</span>
+                          </button>
+                          no painel ao lado para <b>proseguir com a resolução dos exercícios dessa unidade</b>.
+                      </p>
+                      <p class="p-md">
+                          Se você preferir pular os exercícios e ir para a unidade seguinte, clique em <a href="">Próxima Unidade</a>.
+                      </p>
+                      <p class="p-md">
+                          Se não puder realizar os exercícios agora não se preocupe pois poderá acessá-los a qualquer momento a partir do seu <b>Dashboard</b>
+                      </p>
+                  </p>
+              </div>
            </div>
        </div>
        <div class="col-lg-3">
            <!-- <div class="panel b"> -->
            <div class="panel">
-               <div class="panel-body bb">
+               <!-- <div class="panel-body bb"> -->
+               <div class="panel-body">
                    <div class="bg-cover">
                        <div class="p-sm text-center">
                            <p>
@@ -19,7 +48,7 @@
                                </a>
                             </p>
                             <p class="m-sm">
-                                Simulado 1
+                                Unidade 1 - Simulado
                             </p>
                          </div>
                    </div>
@@ -32,7 +61,7 @@
                        </div>
                    </div>
                </div>
-               <div class="panel-body bb">
+               <!-- <div class="panel-body">
                    <div class="table-grid table-grid-align-middle mv">
                        <div class="col">
                            <div class="progress progress-xs m0">
@@ -43,42 +72,20 @@
                            <div class="text-bold text-muted">48%</div>
                        </div>
                    </div>
-               </div>
-               <div class="panel-body">
-                   <ul class="list-inline mv">
-                       <li>
-                           <div class="badge p-sm bg-warning">priority</div>
-                       </li>
-                       <li>
-                           <div class="badge p-sm bg-gray">angularjs</div>
-                       </li>
-                       <li>
-                           <div class="badge p-sm bg-gray">jquery</div>
-                       </li>
-                       <li>
-                           <div class="badge p-sm bg-gray">gulp</div>
-                       </li>
-                   </ul>
-               </div>
+               </div> -->
                <table class="table bb">
                    <tbody>
                        <tr>
                            <td>
-                               <strong>Start date</strong>
+                               <strong>Número de Questões</strong>
                            </td>
-                           <td>02/01/2016</td>
+                           <td>10</td>
                        </tr>
                        <tr>
                            <td>
-                               <strong>Estimated Hours</strong>
+                               <strong>Tempo Estimado</strong>
                            </td>
-                           <td>122hs</td>
-                       </tr>
-                       <tr>
-                           <td>
-                               <strong>Time Consumed</strong>
-                           </td>
-                           <td>62hs</td>
+                           <td>15 minutos</td>
                        </tr>
                    </tbody>
                </table>
