@@ -10,13 +10,9 @@
                       Unidade Concluída!
                   </h3>
                   <p class="p-md">
-                      <p class="lead">Parabéns! Você assistiu a todas as aulas da <b>unidade {{ data.obj.id }}</b> do curso <b> {{ data.course.title }}.</b></p>
-                      <p class="text-muted">Acompanhe o seu progresso no curso</p>
-                      <div class="progress progress-xl mb10">
-                          <div role="progressbar" aria-valuenow="{{ data.course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-{{ data.course_progress.progress_colour }} progress-{{ data.course_progress.progress_left }}">
-                              <span class="sr-only-focusable">{{ data.course_progress.progress_left }}</span>
-                          </div>
-                      </div>
+                      <p class="lead">
+                          Parabéns! Você assistiu a todas as aulas da <b>unidade {{ data.obj.id }}</b> do curso <b> {{ data.course.title }}.</b>
+                      </p>
                       <p class="p-md">
                           Clique em
                           <button type="button" class="btn btn-default btn-oval">
@@ -26,9 +22,15 @@
                           no painel ao lado para <b>proseguir com a resolução dos exercícios dessa unidade</b>.
                       </p>
                       <p class="p-md">
-                          Se você preferir pular os exercícios e iniciar a unidade seguinte, clique <a href="{% url 'resume-course' course_id=data.course.id %}">Iniciar Próxima Unidade</a>.
+                          Se você preferir, clique <a href="{% url 'resume-course' course_id=data.course.id %}">Iniciar Próxima Unidade</a>.
                           Você poderá realizar o simulado desta unidade a qualquer momento a partir do seu <b>Dashboard</b>.
                       </p>
+                      <p class="text-muted">Acompanhe o seu progresso no curso</p>
+                      <div class="progress progress-xl mb10">
+                          <div role="progressbar" aria-valuenow="{{ data.course_progress.progress_left }}" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-{{ data.course_progress.progress_colour }} progress-{{ data.course_progress.progress_left }}">
+                              <span class="sr-only-focusable">{{ data.course_progress.progress_left }}</span>
+                          </div>
+                      </div>
                   </p>
               </div>
            </div>
@@ -52,25 +54,17 @@
                    </div>
                    <div class="clearfix">
                        <div class="text-center">
-                           <button type="button" class="btn btn-default btn-oval">
+                           <a role="button" href="{% url 'start-unit-quiz' unit_id=data.obj.id %}" class="btn btn-default btn-oval">
+                               <em class="fa fa-play fa-fw text-muted"></em>
+                               Iniciar
+                           </a>
+                           <!-- <button type="button" class="btn btn-default btn-oval">
                                <em class="fa fa-play fa-fw text-muted"></em>
                                <span>Iniciar</span>
-                           </button>
+                           </button> -->
                        </div>
                    </div>
                </div>
-               <!-- <div class="panel-body">
-                   <div class="table-grid table-grid-align-middle mv">
-                       <div class="col">
-                           <div class="progress progress-xs m0">
-                               <div style="width: 48%" class="progress-bar progress-bar-info">48%</div>
-                           </div>
-                       </div>
-                       <div class="col wd-xxs text-right">
-                           <div class="text-bold text-muted">48%</div>
-                       </div>
-                   </div>
-               </div> -->
                <table class="table bb">
                    <tbody>
                        <tr>

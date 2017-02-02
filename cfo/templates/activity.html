@@ -15,35 +15,20 @@
            <div class="panel panel-video">
                <div class="bg-cover">
                     <div class="p-sm text-center">
-                        <p>
+                        <p class="p-md">
                             <a href="{% url 'course' id=data.course.id %}">
                                 <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb96">
                             </a>
                         </p>
-                        <p class="m-sm">
-                            <a href="{% url 'unit' course_id=data.course.id id=data.unit.id %}">
-                                Unidade {{ data.unit.rank }}
-                            </a>
+                        <p class="p-md">
+                            {{ data.unit.course.title }}
                         </p>
-                        <p class="m-sm">
-                             {{ data.lesson.title }}
-                        </p>
-                        <div class="table-grid table-grid-align-middle mv">
-                            <div class="col">
-                                <div class="progress progress-xs m0">
-                                    <div style="width: 48%" class="progress-bar progress-bar-info">48%</div>
-                                </div>
-                            </div>
-                            <div class="col wd-xxs text-right">
-                                <div class="text-bold text-muted">48%</div>
-                            </div>
-                        </div>
-                        <p class="m-sm">
-                            <b>{{ data.obj.title }} </b>
+                        <p class="lead">
+                            {{ data.obj.title }}
                         </p>
                      </div>
                </div>
-               <hr>
+               <!-- <hr> -->
                <div class="p-sm text-center">
                    <a role="button" href="{% url 'finish_activity' course_id=data.course.id activity_id=data.obj.id %}" class="btn btn-labeled btn-info" style="display:block">
                        Finalizar Atividade
@@ -67,19 +52,35 @@
                        </div>
                    </div>
                </div>
+               <!-- <div class="table-grid table-grid-align-middle mv">
+                   <div class="col">
+                       <div class="progress progress-xs m0">
+                           <div style="width: 48%" class="progress-bar progress-bar-info">48%</div>
+                       </div>
+                   </div>
+                   <div class="col wd-xxs text-right">
+                       <div class="text-bold text-muted">48%</div>
+                   </div>
+               </div> -->
                <table class="table bb">
                    <tbody>
                        <tr>
                            <td>
-                               <strong>Iniciado Em</strong>
+                               <strong>Lição</strong>
                            </td>
-                           <td>02/01/2016</td>
+                           <td>
+                               {{ data.lesson.title }}
+                           </td>
                        </tr>
                        <tr>
                            <td>
-                               <strong>Estimated Hours</strong>
+                               <strong>Unidade</strong>
                            </td>
-                           <td>122hs</td>
+                           <td>
+                               <a href="{% url 'unit' course_id=data.course.id id=data.unit.id %}">
+                                   {{ data.unit.title }}
+                               </a>
+                            </td>
                        </tr>
                    </tbody>
                </table>

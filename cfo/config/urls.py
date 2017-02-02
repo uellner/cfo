@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^logout/',user_views.logout_view, name='logout_view'),
     url(r'^recover/',user_views.recover_view, name='recover_view'),
     url(r'^student/(?P<student>[0-9]+)/$', user_views.edit, name='user_edit'),
-    url(r'^quiz/course/(?P<course_id>[0-9]+)/start/$', quiz_views.start_quiz, name='start-quiz'),
+    url(r'^quiz/unit/(?P<unit_id>[0-9]+)/start/$', quiz_views.start_unit_quiz, name='start-unit-quiz'),
     url(
         r'^course/(?P<course_id>[0-9]+)/unit/(?P<unit_id>[0-9]+)/lesson/(?P<lesson_id>[0-9]+)/activity/(?P<id>[0-9]+)/$',
         course_views.activity,

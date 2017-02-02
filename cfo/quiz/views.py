@@ -7,7 +7,7 @@ from .models import Quiz
 
 @render_to('quiz.html')
 @login_required
-def start_quiz(request, course_id):
+def start_unit_quiz(request, unit_id):
     # activity = get_object_or_404(Activity, id=id)
     return {
         'user_logout': reverse('logout_view'),
