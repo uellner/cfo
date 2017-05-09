@@ -1,4 +1,5 @@
 from django.db import models
+from ..user.models import QuizProgress
 import random
 
 
@@ -8,14 +9,31 @@ class Quiz(models.Model):
     """
     course = models.ForeignKey('course.Course', verbose_name="Curso")
     unit = models.ForeignKey('course.Unit', blank=True, null=True, verbose_name="Unidade")
-    questions = models.ManyToManyField('quiz.Question', blank=True, verbose_name='Questões')
+    questions = models.ManyToManyField('quiz.Question', blank=True, through='QuizQuestion', verbose_name='Questões')
 
     def __str__(self):
-        return self.course.title
+        return "[%d] - %s" % (self.id, self.course.title)
 
     class Meta:
         verbose_name = "Quiz"
         verbose_name_plural = "Quiz"
+
+    def start_quiz(self, student):
+        u"""
+            Start a quiz.
+        """
+        if not student:
+            return False
+
+        quiz_progress = QuizProgress(
+            quiz=self,
+            student=student,
+            sample=len(self.questions.all),
+            answer=0,
+            score=0
+        )
+        quiz_progress.save()
+        return quiz_progress
 
 
 class Answer(models.Model):
@@ -58,18 +76,17 @@ class Question(models.Model):
         verbose_name = "Questão"
         verbose_name_plural = "Questões"
 
-    # @classmethod
-    # def get_questions_unit_quiz(cls, unit, sample=10):
-    #     u"""
-    #         Get random questions to unit quiz.
-    #     """
-    #     if not unit:
-    #         return False
-    #
-    #     course_progress = cls.objects.filter(
-    #         course=self,
-    #         student=student,
-    #         activity=self.get_start_activity()
-    #     )
-    #     course_progress.save()
-    #     return course_progress.activity
+
+class QuizQuestion(models.Model):
+    u"""
+        Classe que representa as questões de um quiz.
+    """
+    quiz = models.ForeignKey('quiz.Quiz', verbose_name="Quiz")
+    question = models.ForeignKey('quiz.Question', verbose_name="Questão")
+    number = models.IntegerField(verbose_name="Número")
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            num = QuizQuestion.objects.filter(quiz=self.quiz).count()
+            self.number = num + 1
+        super(QuizQuestion, self).save(*args, **kwargs)
