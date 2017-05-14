@@ -52,14 +52,20 @@
                                     Revisar Conteúdo
                                 </a>
                             {% endif %}
+                            {% if feature_quiz_progress %}
+                                <a role="button" href="{% url 'resume-quiz' quiz_progress_id=feature_quiz_progress.id %}" class="btn btn-info btn-lg">
+                                    Continuar Simulado
+                                </a>
+                            {% else %}
+                                <a role="button" href="{% url 'unit-finish' course_id=course.id id=1 %}" class="btn btn-info btn-lg">
+                                    Iniciar Simulado
+                                </a>
+                            {% endif %}
                         {% else %}
                             <a role="button" href="{% url 'start_course' course_id=course.id %}" class="btn btn-info btn-lg">
                                 Iniciar Agora!
                             </a>
                         {% endif %}
-                        <a role="button" href="{% url 'unit-finish' course_id=course.id id=1 %}" class="btn btn-success btn-lg">
-                            Simulado
-                        </a>
                     </p>
                 </div>
           </div>

@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from annoying.decorators import render_to
 from .models import Activity, Unit, Lesson, Course
-from ..user.models import CourseProgress
+from ..user.models import CourseProgress, QuizProgress
 
 
 @render_to('index.html')
@@ -17,19 +17,30 @@ def index(request):
 def dashboard(request):
     """ Dashboard """
     feature_course = get_object_or_404(Course, id=1)
-    student_progress = CourseProgress.objects.filter(student=request.user.profile).all()
+    student = request.user.profile
+    student_progress = CourseProgress.objects.filter(student=student).all()
     student_courses = [cp.course for cp in student_progress]
     next_activity = None
+    quiz_progress = None
     if feature_course in student_courses:
-        next_activity = feature_course.get_next_activity(request.user.profile)
+        next_activity = feature_course.get_next_activity(student)
         feature_course_progress = CourseProgress.objects.filter(
-            student=request.user.profile, course=feature_course
+            student=student, course=feature_course
         ).first()
+        quiz_progress = QuizProgress.objects.filter(
+            student=student,
+            quiz__course=feature_course,
+            is_completed=False
+        ).all()
+        if quiz_progress:
+            quiz_progress = quiz_progress[0]
+
     return {
         'course': feature_course,
         'student_courses': student_courses,
         'student_progress': student_progress,
         'feature_course_progress': feature_course_progress,
+        'feature_quiz_progress': quiz_progress,
         'next_activity': next_activity,
         'user_logout': reverse('logout_view'),
     }

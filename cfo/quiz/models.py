@@ -1,5 +1,6 @@
 from django.db import models
 from ..user.models import QuizProgress
+from ..course.models import Unit
 import random
 
 
@@ -18,17 +19,30 @@ class Quiz(models.Model):
         verbose_name = "Quiz"
         verbose_name_plural = "Quiz"
 
-    def start_quiz(self, student):
+    def start(self, student, sample=2, units=[]):
         u"""
             Start a quiz.
         """
         if not student:
             return False
 
+        # Collect all units if the quiz is not for a particulary one
+        if not units:
+            units = [u.id for u in Unit.objects.filter(course=self.course).all()]
+
+        # save random questions on the new quiz
+        for obj in Question.objects.random(sample, units).all():
+            quiz_question = QuizQuestion(
+                quiz=self,
+                question=obj
+            )
+            quiz_question.save()
+
+        # start quiz progress
         quiz_progress = QuizProgress(
             quiz=self,
             student=student,
-            sample=len(self.questions.all),
+            sample=sample,
             answer=0,
             score=0
         )
