@@ -7,46 +7,28 @@
               <div class="panel-body">
                   <p class="p-md">
                       <p class="lead">
-                          Questão 1 / 10
+                          Questão {{ data.current_question.number }} / {{ data.quiz_progress.sample }}
                       </p>
                       <p class="p-md">
-                          I. A expressão “finanças públicas” designa métodos e processos financeiros por meio dos quais os governos federal, estadual e municipal desempenham suas funções.
-                      </p>
-                      <p class="p-md">
-                          II. Através do orçamento público os governos perseguem os objetivos de satisfazer às necessidades sociais, de induzir uma eficiente utilização dos recursos e de corrigir a distribuição de renda em uma sociedade.
-                      </p>
-                      <p class="p-md">
-                          III. O orçamento público desempenha a função de instrumento de uma política macroeconômica, visando a estabilização da economia.
+                          {{ data.current_question.question.description }}
                       </p>
                       <hr>
-                      <div class="radio c-radio">
-                          <label>
-                              <input id="inlineradio10" type="radio" name="i-radio" value="option1" checked="">
-                              <span class="fa fa-check"></span>
-                              Todas as afirmações estão incorretas
-                          </label>
-                      </div>
-                      <div class="radio c-radio">
+                      {% for answer in data.answers %}
+                          <div class="radio c-radio">
+                              <label>
+                                  <input id="{{ answer.id }}" type="radio" name="i-radio" value="{{ answer.id }}">
+                                  <span class="fa fa-check"></span>
+                                  {{ answer.description }}
+                              </label>
+                          </div>
+                      {% endfor %}
+                      <!-- <div class="radio c-radio">
                           <label>
                               <input id="inlineradio11" type="radio" name="i-radio" value="option2" checked="">
                               <span class="fa fa-check"></span>
                               Todas as afirmações estão incorretas
                           </label>
-                      </div>
-                      <div class="radio c-radio">
-                          <label>
-                              <input id="inlineradio12" type="radio" name="i-radio" value="option3" checked="">
-                              <span class="fa fa-check"></span>
-                              Somente a afirmação I está correta
-                          </label>
-                      </div>
-                      <div class="radio c-radio">
-                          <label>
-                              <input id="inlineradio13" type="radio" name="i-radio" value="option4" checked="">
-                              <span class="fa fa-check"></span>
-                              Somente a afirmação II está correta
-                          </label>
-                      </div>
+                      </div> -->
                   </p>
               </div>
            </div>
