@@ -42,9 +42,7 @@ class Quiz(models.Model):
         quiz_progress = QuizProgress(
             quiz=self,
             student=student,
-            sample=sample,
-            answer=0,
-            score=0
+            sample=sample
         )
         quiz_progress.save()
         return quiz_progress

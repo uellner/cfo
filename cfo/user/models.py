@@ -63,10 +63,12 @@ class QuizProgress(TimeStampedModel):
     """
     quiz = models.ForeignKey('quiz.Quiz', verbose_name="Quiz")
     student = models.ForeignKey('user.Student', verbose_name="Estudante")
+    # Answers provided by student
+    answers = models.ManyToManyField('quiz.Answer', blank=True, verbose_name='Respostas')
     # Quantity of questions for this quiz
     sample = models.IntegerField(default=10, verbose_name="Quantidade de Questões")
     # Questions answered
-    answer = models.IntegerField(default=0, verbose_name="Respostas")
+    progress = models.IntegerField(default=0, verbose_name="Quantidade Respondida")
     # Score based on answers
     score = models.IntegerField(default=0, verbose_name="Desempenho")
     # Flag to indicate whether the quiz is completed or not
