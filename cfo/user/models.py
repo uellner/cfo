@@ -73,3 +73,19 @@ class QuizProgress(TimeStampedModel):
     score = models.IntegerField(default=0, verbose_name="Desempenho")
     # Flag to indicate whether the quiz is completed or not
     is_completed = models.BooleanField(default=False)
+
+    def save_progress(self, answer):
+        u"""
+            Save the quiz progress based on student answers.
+        """
+        if not answer:
+            return None
+        # add answer
+        self.answers.add(answer)
+        # walk on progress
+        self.progress += 1
+        if answer.is_correct:
+            self.score += 1
+        self.save()
+
+        return self
