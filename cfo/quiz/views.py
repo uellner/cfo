@@ -12,6 +12,17 @@ from ..course.models import Unit
 def start_unit_quiz(request, unit_id):
     unit = get_object_or_404(Unit, id=unit_id)
 
+    # Checking if already exists a quiz in progress for the student and unit
+    quiz_progress = QuizProgress.objects.filter(
+        student=request.user.profile,
+        is_completed=False,
+        quiz__unit=unit.id
+    ).all()
+
+    # I's not possible to create a quiz while there is another one in progress
+    if quiz_progress and quiz_progress[0]:
+        return redirect(reverse('dashboard'))
+
     # create a new quiz
     new_quiz = Quiz(
         course=unit.course,
@@ -25,19 +36,21 @@ def start_unit_quiz(request, unit_id):
         sample=2,
         units=[unit_id]
     )
-    return {
-        'user_logout': reverse('logout_view'),
-        'data': {
-            'unit': unit,
-            'quiz_progress': quiz_progress
-        }
-    }
+
+    return redirect(reverse('resume-quiz', args=(quiz_progress.id,)))
 
 
 @render_to('quiz.html')
 @login_required
 def resume(request, quiz_progress_id):
     quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
+    # if the user is not the student
+    if not quiz_progress.student == request.user.profile:
+        return redirect(reverse('dashboard'))
+    # if the quiz is finished...
+    if quiz_progress.is_completed:
+        return redirect(reverse('dashboard'))
+
     # find the current answer
     current_question = QuizQuestion.objects.filter(
         quiz=quiz_progress.quiz,
@@ -60,16 +73,8 @@ def resume(request, quiz_progress_id):
             answer = get_object_or_404(Answer, id=answer_id)
             # save the answer and progress
             quiz_progress.save_progress(answer)
-            # TODO apagar abaixo se estiver correto...
-            # quiz_progress.answers.add(answer)
-            # quiz_progress.progress += 1
-            # if answer.is_correct:
-            #     quiz_progress.score += 1
-            # quiz_progress.save()
 
-            return redirect(
-                reverse('resume-quiz', args=(quiz_progress_id))
-            )
+            return redirect(reverse('resume-quiz', args=(quiz_progress_id)))
     else:
         form = AnswerQuizForm(answers)
 

@@ -84,8 +84,12 @@ class QuizProgress(TimeStampedModel):
         self.answers.add(answer)
         # walk on progress
         self.progress += 1
+        if self.progress == self.sample:
+            self.is_completed = True
+        # score
         if answer.is_correct:
             self.score += 1
+
         self.save()
 
         return self
