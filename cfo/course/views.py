@@ -34,6 +34,9 @@ def dashboard(request):
         ).all()
         if quiz_progress:
             quiz_progress = quiz_progress[0]
+            print ("@" * 100)
+            print (quiz_progress)
+            print ("@" * 100)
 
     return {
         'course': feature_course,

@@ -73,6 +73,8 @@ class QuizProgress(TimeStampedModel):
     score = models.IntegerField(default=0, verbose_name="Desempenho")
     # Flag to indicate whether the quiz is completed or not
     is_completed = models.BooleanField(default=False)
+    # Flag to indicate whether the quiz is reviewed or not
+    is_reviewed = models.BooleanField(default=False)
 
     def save_progress(self, answer):
         u"""
@@ -93,3 +95,26 @@ class QuizProgress(TimeStampedModel):
         self.save()
 
         return self
+
+    def mark_as_reviewed(self):
+        u"""
+            Mark the quiz as reviewed.
+        """
+        if not self.is_reviewed:
+            self.is_reviewed = True
+            self.save()
+        return self
+
+    @property
+    def score_wrong(self):
+        u"""
+            Gets the wrong answers
+        """
+        return self.sample - self.score
+
+    @property
+    def score_percentage(self):
+        u"""
+            Gets the percentage score of this quiz
+        """
+        return '{0:.1%}'.format(self.score / self.sample)

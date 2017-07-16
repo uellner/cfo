@@ -16,10 +16,11 @@ def start_unit_quiz(request, unit_id):
     quiz_progress = QuizProgress.objects.filter(
         student=request.user.profile,
         is_completed=False,
+        is_reviewed=False,
         quiz__unit=unit.id
     ).all()
 
-    # I's not possible to create a quiz while there is another one in progress
+    # It's not possible to create a quiz while there is another one in progress
     if quiz_progress and quiz_progress[0]:
         return redirect(reverse('dashboard'))
 
@@ -40,6 +41,50 @@ def start_unit_quiz(request, unit_id):
     return redirect(reverse('resume-quiz', args=(quiz_progress.id,)))
 
 
+@render_to('quiz_finish.html')
+@login_required
+def finish_unit_quiz(request, quiz_progress_id):
+    quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
+
+    # just mark as reviewed
+    if not quiz_progress.is_reviewed:
+        quiz_progress.mark_as_reviewed()
+
+    # continue the course...
+    return redirect(reverse('resume-course', args=(quiz_progress.quiz.course.id,)))
+
+
+@render_to('quiz_finish.html')
+@login_required
+def review(request, quiz_progress_id):
+    quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
+
+    if quiz_progress.is_reviewed:
+        return redirect(reverse('dashboard'))
+
+    return {
+        'user_logout': reverse('logout_view'),
+        'action': reverse('resume-quiz', args=(quiz_progress_id,)),
+        'data': {
+            'unit': quiz_progress.quiz.unit,
+            'quiz_progress': quiz_progress,
+        }
+    }
+
+
+@render_to('quiz_finish.html')
+@login_required
+def retake_unit_quiz(request, quiz_progress_id):
+    quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
+
+    # just mark as reviewed
+    if not quiz_progress.is_reviewed:
+        quiz_progress.mark_as_reviewed()
+
+    # start anoter quiz...
+    return redirect(reverse('start-unit-quiz', args=(quiz_progress.quiz.unit.id,)))
+
+
 @render_to('quiz.html')
 @login_required
 def resume(request, quiz_progress_id):
@@ -47,9 +92,14 @@ def resume(request, quiz_progress_id):
     # if the user is not the student
     if not quiz_progress.student == request.user.profile:
         return redirect(reverse('dashboard'))
+
     # if the quiz is finished...
     if quiz_progress.is_completed:
-        return redirect(reverse('dashboard'))
+        # if it's not reviewed...
+        if not quiz_progress.is_reviewed:
+            return redirect(reverse('review-quiz', args=(quiz_progress.id,)))
+        else:
+            return redirect(reverse('dashboard'))
 
     # find the current answer
     current_question = QuizQuestion.objects.filter(
@@ -58,8 +108,7 @@ def resume(request, quiz_progress_id):
     ).all()
     current_question = current_question and current_question[0] or None
 
-    # the quiz needs to be finished ...
-    # TODO finish a quiz!
+    # TODO current question not found, what to do?
     if not current_question:
         return redirect(reverse('dashboard'))
 
@@ -74,13 +123,13 @@ def resume(request, quiz_progress_id):
             # save the answer and progress
             quiz_progress.save_progress(answer)
 
-            return redirect(reverse('resume-quiz', args=(quiz_progress_id)))
+            return redirect(reverse('resume-quiz', args=(quiz_progress_id,)))
     else:
         form = AnswerQuizForm(answers)
 
     return {
         'user_logout': reverse('logout_view'),
-        'action': reverse('resume-quiz', args=(quiz_progress_id)),
+        'action': reverse('resume-quiz', args=(quiz_progress_id,)),
         'form': form,
         'data': {
             'unit': quiz_progress.quiz.unit,

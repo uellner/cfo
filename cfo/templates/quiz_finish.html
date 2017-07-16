@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <div class="row">
+       <div class="col-lg-9">
+           <div class="panel">
+              <div class="panel-body">
+                  <h3>
+                      <em class="fa fa-trophy"></em>
+                      Simulado Concluído!
+                  </h3>
+                  <p class="p-md">
+                      <p class="lead">
+                          Parabéns! Você concluíu os exercícios sobre a <b>unidade {{ data.unit.id }}</b> do curso <b> {{ data.unit.course.title }}.</b>
+                          Confira abaixo seu desempenho:
+                      </p>
+                      <table class="table bb">
+                          <tbody>
+                              <tr>
+                                  <td><strong>Total de Acertos</strong></td>
+                                  <td>{{ data.quiz_progress.score }}</td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Total de Erros</strong></td>
+                                  <td>{{ data.quiz_progress.score_wrong }}</td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Aproveitamento</strong></td>
+                                  <td>{{ data.quiz_progress.score_percentage }}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </p>
+                  <blockquote>
+                      <p>
+                          Recomedamos ter um aproveitamento <b>mínimo de 80%</b> antes de dar sequência ao curso.
+                      </p>
+                  </blockquote>
+                  <p class="p-md">
+                      <a role="button" href="" class="btn btn-default btn-oval">
+                          <em class="fa fa-play fa-fw text-muted"></em>
+                          Iniciar Revisão
+                      </a>
+                      <a role="button" href="{% url 'retake-unit-quiz' quiz_progress_id=data.quiz_progress.id %}" class="btn btn-default btn-oval">
+                          <em class="fa fa-backward fa-fw text-muted"></em>
+                          Refazer Simulado
+                      </a>
+                  </p>
+              </div>
+           </div>
+       </div>
+       <div class="col-lg-3">
+           <div class="panel">
+               <div class="panel-body">
+                   <div class="bg-cover">
+                       <div class="p-sm text-center">
+                           <p>
+                               <a href="">
+                                   <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb96">
+                               </a>
+                            </p>
+                            <p class="lead">
+                                Se você acha que está preparado, continue seus estudos!
+                            </p>
+                         </div>
+                   </div>
+                   <div class="clearfix">
+                       <div class="text-center">
+                           <a role="button" href="{% url 'finish-unit-quiz' quiz_progress_id=data.quiz_progress.id %}" class="btn btn-labeled btn-info">
+                               Iniciar próxima unidade!
+                           </a>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+{% endblock content %}
