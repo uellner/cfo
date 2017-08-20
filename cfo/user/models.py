@@ -73,6 +73,8 @@ class QuizProgress(TimeStampedModel):
     score = models.IntegerField(default=0, verbose_name="Desempenho")
     # Flag to indicate whether the quiz is completed or not
     is_completed = models.BooleanField(default=False)
+    # Flag to indicate whether the quiz is scored or not
+    is_scored = models.BooleanField(default=False)
     # Flag to indicate whether the quiz is reviewed or not
     is_reviewed = models.BooleanField(default=False)
 
@@ -94,6 +96,15 @@ class QuizProgress(TimeStampedModel):
 
         self.save()
 
+        return self
+
+    def mark_as_scored(self):
+        u"""
+            Mark the quiz as scored.
+        """
+        if not self.is_scored:
+            self.is_scored = True
+            self.save()
         return self
 
     def mark_as_reviewed(self):

@@ -16,7 +16,7 @@ def start_unit_quiz(request, unit_id):
     quiz_progress = QuizProgress.objects.filter(
         student=request.user.profile,
         is_completed=False,
-        is_reviewed=False,
+        is_scored=False,
         quiz__unit=unit.id
     ).all()
 
@@ -41,14 +41,51 @@ def start_unit_quiz(request, unit_id):
     return redirect(reverse('resume-quiz', args=(quiz_progress.id,)))
 
 
+@render_to('quiz_review.html')
+@login_required
+def review(request, quiz_progress_id):
+    quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
+
+    # if the user is not the student
+    if not quiz_progress.student == request.user.profile:
+        return redirect(reverse('dashboard'))
+
+    questions = []
+    questions_dict = {}
+    if quiz_progress:
+        questions = [a.question for a in Answer.objects.filter(id__in=quiz_progress.answers.all())]
+        for q in questions:
+            answers = Answer.objects.filter(question_id=q.id).all()
+            questions_dict[q] = answers
+
+        print("#" * 100)
+        print(questions_dict)
+        print("#" * 100)
+    # answers = Answer.objects.filter(question=current_question.question).all()
+
+    return {
+        'user_logout': reverse('logout_view'),
+        'action': reverse('resume-quiz', args=(quiz_progress_id,)),
+        'data': {
+            'unit': quiz_progress.quiz.unit,
+            'quiz_progress': quiz_progress,
+            'questions': questions_dict
+        }
+    }
+
+
 @render_to('quiz_finish.html')
 @login_required
 def finish_unit_quiz(request, quiz_progress_id):
     quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
 
-    # just mark as reviewed
-    if not quiz_progress.is_reviewed:
-        quiz_progress.mark_as_reviewed()
+    # if the user is not the student
+    if not quiz_progress.student == request.user.profile:
+        return redirect(reverse('dashboard'))
+
+    # just mark as scored
+    if not quiz_progress.is_scored:
+        quiz_progress.mark_as_scored()
 
     # continue the course...
     return redirect(reverse('resume-course', args=(quiz_progress.quiz.course.id,)))
@@ -56,10 +93,14 @@ def finish_unit_quiz(request, quiz_progress_id):
 
 @render_to('quiz_finish.html')
 @login_required
-def review(request, quiz_progress_id):
+def score(request, quiz_progress_id):
     quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
 
-    if quiz_progress.is_reviewed:
+    # if the user is not the student
+    if not quiz_progress.student == request.user.profile:
+        return redirect(reverse('dashboard'))
+
+    if quiz_progress.is_scored:
         return redirect(reverse('dashboard'))
 
     return {
@@ -77,9 +118,9 @@ def review(request, quiz_progress_id):
 def retake_unit_quiz(request, quiz_progress_id):
     quiz_progress = get_object_or_404(QuizProgress, id=quiz_progress_id)
 
-    # just mark as reviewed
-    if not quiz_progress.is_reviewed:
-        quiz_progress.mark_as_reviewed()
+    # just mark as scored
+    if not quiz_progress.is_scored:
+        quiz_progress.mark_as_scored()
 
     # start anoter quiz...
     return redirect(reverse('start-unit-quiz', args=(quiz_progress.quiz.unit.id,)))
@@ -95,9 +136,9 @@ def resume(request, quiz_progress_id):
 
     # if the quiz is finished...
     if quiz_progress.is_completed:
-        # if it's not reviewed...
-        if not quiz_progress.is_reviewed:
-            return redirect(reverse('review-quiz', args=(quiz_progress.id,)))
+        # if it's not scored...
+        if not quiz_progress.is_scored:
+            return redirect(reverse('score-quiz', args=(quiz_progress.id,)))
         else:
             return redirect(reverse('dashboard'))
 

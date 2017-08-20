@@ -37,9 +37,9 @@
                       </p>
                   </blockquote>
                   <p class="p-md">
-                      <a role="button" href="" class="btn btn-default btn-oval">
+                      <a role="button" href="{% url 'review-quiz' quiz_progress_id=data.quiz_progress.id %}" class="btn btn-default btn-oval">
                           <em class="fa fa-play fa-fw text-muted"></em>
-                          Iniciar Revisão
+                          Revisar Questões
                       </a>
                       <a role="button" href="{% url 'retake-unit-quiz' quiz_progress_id=data.quiz_progress.id %}" class="btn btn-default btn-oval">
                           <em class="fa fa-backward fa-fw text-muted"></em>

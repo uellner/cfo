@@ -27,8 +27,9 @@ urlpatterns = [
     url(r'^quiz/unit/(?P<unit_id>[0-9]+)/start/$', quiz_views.start_unit_quiz, name='start-unit-quiz'),
     url(r'^quiz/progress/(?P<quiz_progress_id>[0-9]+)/retake-unit-quiz/$', quiz_views.retake_unit_quiz, name='retake-unit-quiz'),
     url(r'^quiz/progress/(?P<quiz_progress_id>[0-9]+)/finish-unit-quiz/$', quiz_views.finish_unit_quiz, name='finish-unit-quiz'),
-    url(r'^quiz/progress/(?P<quiz_progress_id>[0-9]+)/resume/$', quiz_views.resume, name='resume-quiz'),
     url(r'^quiz/progress/(?P<quiz_progress_id>[0-9]+)/review/$', quiz_views.review, name='review-quiz'),
+    url(r'^quiz/progress/(?P<quiz_progress_id>[0-9]+)/resume/$', quiz_views.resume, name='resume-quiz'),
+    url(r'^quiz/progress/(?P<quiz_progress_id>[0-9]+)/score/$', quiz_views.score, name='score-quiz'),
     url(
         r'^course/(?P<course_id>[0-9]+)/unit/(?P<unit_id>[0-9]+)/lesson/(?P<lesson_id>[0-9]+)/activity/(?P<id>[0-9]+)/$',
         course_views.activity,

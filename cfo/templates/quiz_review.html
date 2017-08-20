@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <div class="row">
+        <form method="" action="" id="form2" class="post-form">
+            <div class="col-lg-9">
+                <div class="panel">
+                    <div class="panel-body">
+                        {% for question, answers in data.questions.items %}
+                            <p class="p-md">
+                                <p class="lead">
+                                    Questão {{ question.number }}
+                                </p>
+                                <p class="p-md">
+                                    {{ question.description }}
+                                </p>
+                                {% for answer in answers.all %}
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input id="{{ question.id }}" type="radio" name="{{ question.id }}" value="{{ answer.id }}" checked="">
+                                            <span class="fa fa-check"></span>
+                                            {{ answer.description }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </p>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="bg-cover">
+                            <div class="p-sm text-center">
+                                <p>
+                                    <a href="">
+                                        <img src="{% static "img/course_logo.png" %}" alt="Image" class="img-thumbnail img-circle thumb96">
+                                    </a>
+                                </p>
+                                <p class="p-md">
+                                    {{ data.unit.course.title }}
+                                </p>
+                                <p class="lead">
+                                    Simulado da Unidade {{ data.unit.rank }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="p-sm text-center">
+                                <a role="button" type="submit" onclick="document.getElementById('form1').submit();" class="btn btn-labeled btn-info" style="display:block">
+                                    Responder Questão
+                                </a>
+                            </div>
+                            <div class="p-sm text-center">
+                                <a role="button" href="" class="btn btn-labeled btn-default" style="display:block">
+                                    Visualizar Correção
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+   </div>
+{% endblock content %}

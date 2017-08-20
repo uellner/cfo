@@ -22,6 +22,7 @@ def dashboard(request):
     student_courses = [cp.course for cp in student_progress]
     next_activity = None
     quiz_progress = None
+    feature_course_progress = None
     if feature_course in student_courses:
         next_activity = feature_course.get_next_activity(student)
         feature_course_progress = CourseProgress.objects.filter(
@@ -34,9 +35,6 @@ def dashboard(request):
         ).all()
         if quiz_progress:
             quiz_progress = quiz_progress[0]
-            print ("@" * 100)
-            print (quiz_progress)
-            print ("@" * 100)
 
     return {
         'course': feature_course,
