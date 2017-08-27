@@ -9,7 +9,14 @@
                         {% for question, answers in data.questions.items %}
                             <p class="p-md">
                                 <p class="lead">
-                                    Questão {{ question.number }}
+                                    <b>Questão {{ forloop.counter }}</b>
+                                    <span class="pull-right">
+                                        {% if question in data.correct_questions %}
+                                            <span class="label label-green">Correta</span>
+                                        {% else %}
+                                            <span class="label label-yellow">Errada</span>
+                                        {% endif %}
+                                    </span>
                                 </p>
                                 <p class="p-md">
                                     {{ question.description }}
@@ -17,14 +24,38 @@
                                 {% for answer in answers.all %}
                                     <div class="radio c-radio">
                                         <label>
-                                            <input id="{{ question.id }}" type="radio" name="{{ question.id }}" value="{{ answer.id }}" checked="">
-                                            <span class="fa fa-check"></span>
+                                            {% if answer in data.user_answers %}
+                                                {% if answer.is_correct %}
+                                                    <input id="{{ question.id }}" type="radio" name="{{ question.id }}" value="{{ answer.id }}" checked="">
+                                                    <span class="fa fa-thumbs-up"></span>
+                                                {% else %}
+                                                    <input id="{{ question.id }}" type="radio" name="{{ answer.id }}" value="{{ answer.id }}" checked="">
+                                                    <span class="fa fa-remove"></span>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if answer.is_correct %}
+                                                    <input id="{{ question.id }}" type="radio" name="{{ question.id }}" value="{{ answer.id }}" checked="">
+                                                    <span class="fa fa-check"></span>
+                                                {% else %}
+                                                    <input id="{{ question.id }}" type="radio" name="{{ answer.id }}" value="{{ answer.id }}" disabled="true">
+                                                    <span class="fa fa-check"></span>
+                                                {% endif %}
+                                            {% endif %}
                                             {{ answer.description }}
                                         </label>
                                     </div>
                                 {% endfor %}
+                                {% if question.comment %}
+                                    <blockquote>
+                                        <p>
+                                            {{ question.comment }}
+                                        </p>
+                                    </blockquote>
+                                {% endif %}
                             </p>
-                            <hr>
+                            {% if not forloop.last %}
+                                <hr>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
@@ -43,19 +74,23 @@
                                     {{ data.unit.course.title }}
                                 </p>
                                 <p class="lead">
-                                    Simulado da Unidade {{ data.unit.rank }}
+                                    Revisão do Simulado da Unidade {{ data.unit.rank }}
                                 </p>
+                                <h4>
+                                    Seu aproveitamento: {{ data.quiz_progress.score_percentage }}
+                                </h4>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="p-sm text-center">
-                                <a role="button" type="submit" onclick="document.getElementById('form1').submit();" class="btn btn-labeled btn-info" style="display:block">
-                                    Responder Questão
+                                <a role="button" href="{% url 'finish-unit-quiz' quiz_progress_id=data.quiz_progress.id %}" class="btn btn-labeled btn-info">
+                                    Iniciar próxima unidade!
                                 </a>
                             </div>
                             <div class="p-sm text-center">
-                                <a role="button" href="" class="btn btn-labeled btn-default" style="display:block">
-                                    Visualizar Correção
+                                <a role="button" href="{% url 'retake-unit-quiz' quiz_progress_id=data.quiz_progress.id %}" class="btn btn-default btn-oval">
+                                    <em class="fa fa-backward fa-fw text-muted"></em>
+                                    Refazer Simulado
                                 </a>
                             </div>
                         </div>

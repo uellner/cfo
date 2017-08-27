@@ -52,16 +52,17 @@ def review(request, quiz_progress_id):
 
     questions = []
     questions_dict = {}
+    user_answers = []
+    correct_questions = []
+
     if quiz_progress:
         questions = [a.question for a in Answer.objects.filter(id__in=quiz_progress.answers.all())]
         for q in questions:
             answers = Answer.objects.filter(question_id=q.id).all()
             questions_dict[q] = answers
 
-        print("#" * 100)
-        print(questions_dict)
-        print("#" * 100)
-    # answers = Answer.objects.filter(question=current_question.question).all()
+        user_answers = quiz_progress.answers.all()
+        correct_questions = [u.question for u in user_answers if u.is_correct]
 
     return {
         'user_logout': reverse('logout_view'),
@@ -69,7 +70,9 @@ def review(request, quiz_progress_id):
         'data': {
             'unit': quiz_progress.quiz.unit,
             'quiz_progress': quiz_progress,
-            'questions': questions_dict
+            'questions': questions_dict,
+            'user_answers': user_answers,
+            'correct_questions': correct_questions
         }
     }
 

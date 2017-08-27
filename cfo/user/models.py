@@ -128,4 +128,4 @@ class QuizProgress(TimeStampedModel):
         u"""
             Gets the percentage score of this quiz
         """
-        return '{0:.1%}'.format(self.score / self.sample)
+        return '{0:.0%}'.format(self.score / self.sample)
